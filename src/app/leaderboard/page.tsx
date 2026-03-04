@@ -1,0 +1,81 @@
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { redirect } from 'next/navigation'
+import { prisma } from '@/lib/prisma'
+import Link from 'next/link'
+
+export default async function LeaderboardPage() {
+  const session = await getServerSession(authOptions)
+  if (!session) redirect('/login')
+
+  const niveaux = await prisma.niveau.findMany({ orderBy: { numero: 'asc' } })
+
+  const scores = await prisma.score.findMany({
+    include: {
+      user: { select: { nom: true } },
+      niveau: { select: { titre: true, numero: true } },
+    },
+    orderBy: { score: 'desc' },
+    take: 50,
+  })
+
+  const topByNiveau = niveaux.map((n) => {
+    const niveauScores = scores
+      .filter((s) => s.niveauId === n.id)
+      .slice(0, 5)
+    return { niveau: n, scores: niveauScores }
+  })
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0f] px-6 py-8">
+      <header className="mb-8 flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-white">Classement</h1>
+        <Link href="/play" className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300 hover:bg-white/10">
+          ← Jouer
+        </Link>
+      </header>
+
+      <div className="mx-auto max-w-4xl space-y-8">
+        {topByNiveau.map(({ niveau, scores: nScores }) => (
+          <div key={niveau.id} className="rounded-xl border border-white/10 bg-white/5 p-6">
+            <h2 className="mb-4 text-lg font-semibold text-white">
+              <span className="mr-2 text-indigo-400">Niveau {niveau.numero}</span>
+              <span className="text-slate-400 text-sm font-normal">{niveau.titre}</span>
+            </h2>
+
+            {nScores.length === 0 ? (
+              <p className="text-sm text-slate-500">Aucun score enregistré.</p>
+            ) : (
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-xs uppercase tracking-widest text-slate-500">
+                    <th className="pb-2 pr-4">#</th>
+                    <th className="pb-2 pr-4">Joueur</th>
+                    <th className="pb-2 pr-4">Score</th>
+                    <th className="pb-2 pr-4">Blocs</th>
+                    <th className="pb-2">Résultat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {nScores.map((s, i) => (
+                    <tr key={s.id} className="border-t border-white/5">
+                      <td className="py-2 pr-4 font-bold text-slate-400">{i + 1}</td>
+                      <td className="py-2 pr-4 text-white">{s.user.nom}</td>
+                      <td className="py-2 pr-4 font-mono text-indigo-300">{s.score.toLocaleString()}</td>
+                      <td className="py-2 pr-4 text-slate-300">{s.blocsPlaces}</td>
+                      <td className="py-2">
+                        <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${s.reussi ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                          {s.reussi ? 'Réussi' : 'Échoué'}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
