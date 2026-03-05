@@ -106,6 +106,7 @@ export default function MultiPlayPage() {
   useEffect(() => {
     if (multi.question) {
       pausedRef.current = true
+      setIsBloque(false)
       setTimer(30)
       // Start 30s timer
       timerRef.current = setInterval(() => {
@@ -314,7 +315,10 @@ export default function MultiPlayPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ salleId }),
     })
-    if (res.status === 403) setIsBloque(true)
+    if (res.status === 403) {
+      setIsBloque(true)
+      setTimeout(() => setIsBloque(false), 5_000)
+    }
   }
 
   async function handleRepondre(index: number) {

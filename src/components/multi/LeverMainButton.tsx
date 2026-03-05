@@ -21,7 +21,7 @@ export function LeverMainButton({ disabled, bloque, onLever }: Props) {
         ✋ Lever la main
       </button>
       {bloque && (
-        <p className="text-sm text-red-400">Vous etes bloque temporairement (10s)</p>
+        <p className="text-sm text-red-400">Vous etes bloque temporairement (5s)</p>
       )}
     </div>
   )

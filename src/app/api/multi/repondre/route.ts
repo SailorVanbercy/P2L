@@ -88,13 +88,13 @@ export async function POST(req: Request) {
       joueurNom,
     })
 
-    // Unblock after 10s
+    // Unblock after 5s
     setTimeout(async () => {
       await prisma.salleJoueur.updateMany({
         where: { salleId, userId },
         data: { bloque: false },
       })
-    }, 10_000)
+    }, 5_000)
 
     return NextResponse.json({ correct: false })
   }
