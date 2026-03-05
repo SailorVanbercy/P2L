@@ -91,6 +91,7 @@ export default function MultiPlayPage() {
   const [countdown, setCountdown] = useState(0)
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const [hasAnswered, setHasAnswered] = useState(false)
+  const [localExplication, setLocalExplication] = useState<string | null>(null)
 
   // ResizeObserver
   useEffect(() => {
@@ -154,6 +155,7 @@ export default function MultiPlayPage() {
             multi.resetQuestion()
             pausedRef.current = false
             setHasAnswered(false)
+            setLocalExplication(null)
             return 30
           }
           return t - 1
@@ -164,6 +166,7 @@ export default function MultiPlayPage() {
       setCanAnswer(false)
       setCountdown(0)
       setHasAnswered(false)
+      setLocalExplication(null)
       if (timerRef.current) {
         clearInterval(timerRef.current)
         timerRef.current = null
@@ -366,7 +369,7 @@ export default function MultiPlayPage() {
   async function handleRepondre(index: number) {
     if (!salleId || !multi.question || hasAnswered) return
     setHasAnswered(true)
-    await fetch('/api/multi/repondre', {
+    const res = await fetch('/api/multi/repondre', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -375,6 +378,13 @@ export default function MultiPlayPage() {
         questionId: multi.question.id,
       }),
     })
+    const data = await res.json()
+    // Resume playing immediately after answering
+    pausedRef.current = false
+    // Show explication locally only if correct
+    if (data.correct) {
+      setLocalExplication(data.explication ?? null)
+    }
   }
 
   return (
@@ -421,17 +431,24 @@ export default function MultiPlayPage() {
         <MobileControls handlers={handlers} />
       </div>
 
-      {/* Question Modal */}
-      {multi.question && (
+      {/* Question Modal — hidden once the player has answered */}
+      {multi.question && !hasAnswered && (
         <QuestionMulti
           question={multi.question}
-          canAnswer={canAnswer && !hasAnswered}
+          canAnswer={canAnswer}
           countdown={countdown}
           reponses={multi.reponses}
-          explication={multi.explication}
           onRepondre={handleRepondre}
           timerSeconds={timer}
         />
+      )}
+
+      {/* Explication banner — shown only to the player who answered correctly */}
+      {localExplication && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 max-w-md rounded-xl border border-green-500/20 bg-green-500/10 px-5 py-3 text-sm text-green-300 shadow-xl">
+          <span className="font-semibold">Bonne reponse ! </span>
+          {localExplication}
+        </div>
       )}
     </div>
   )

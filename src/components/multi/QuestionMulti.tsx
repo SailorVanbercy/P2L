@@ -21,7 +21,6 @@ interface Props {
   canAnswer: boolean
   countdown: number
   reponses: ReponseJoueur[]
-  explication: string | null
   onRepondre: (index: number) => void
   timerSeconds: number
 }
@@ -31,7 +30,6 @@ export function QuestionMulti({
   canAnswer,
   countdown,
   reponses,
-  explication,
   onRepondre,
   timerSeconds,
 }: Props) {
@@ -104,13 +102,6 @@ export function QuestionMulti({
           </div>
         )}
 
-        {/* Explication after a correct answer */}
-        {explication && (
-          <div className="mt-4 rounded-lg border border-green-500/20 bg-green-500/10 px-4 py-3 text-sm text-green-300">
-            <span className="font-semibold">Bonne reponse ! </span>
-            {explication}
-          </div>
-        )}
       </div>
     </div>
   )

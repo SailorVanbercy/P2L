@@ -74,7 +74,6 @@ export async function POST(req: Request) {
     joueurId: userId,
     correct,
     points,
-    explication: correct ? question.explication : null,
     scores: scores.map((s) => ({
       joueurNom: s.user.nom,
       joueurId: s.userId,
@@ -82,5 +81,9 @@ export async function POST(req: Request) {
     })),
   })
 
-  return NextResponse.json({ correct, points })
+  return NextResponse.json({
+    correct,
+    points,
+    explication: correct ? question.explication : null,
+  })
 }
