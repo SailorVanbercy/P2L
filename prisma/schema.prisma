@@ -12,14 +12,21 @@ enum Role {
   ADMIN
 }
 
+enum StatutSalle {
+  ATTENTE
+  EN_JEU
+  TERMINEE
+}
+
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  nom       String
-  role      Role     @default(JOUEUR)
-  createdAt DateTime @default(now())
-  scores    Score[]
+  id            String         @id @default(cuid())
+  email         String         @unique
+  password      String
+  nom           String
+  role          Role           @default(JOUEUR)
+  createdAt     DateTime       @default(now())
+  scores        Score[]
+  salleJoueurs  SalleJoueur[]
 }
 
 model Niveau {
@@ -30,6 +37,7 @@ model Niveau {
   vitesse     Int        @default(500)
   questions   Question[]
   scores      Score[]
+  salles      Salle[]
 }
 
 model Question {
@@ -52,4 +60,25 @@ model Score {
   blocsPlaces Int
   reussi      Boolean
   createdAt   DateTime @default(now())
+}
+
+model Salle {
+  id        String        @id @default(cuid())
+  code      String        @unique
+  niveauId  Int
+  niveau    Niveau        @relation(fields: [niveauId], references: [id])
+  hostId    String
+  statut    StatutSalle   @default(ATTENTE)
+  joueurs   SalleJoueur[]
+  createdAt DateTime      @default(now())
+}
+
+model SalleJoueur {
+  id       String  @id @default(cuid())
+  salleId  String
+  salle    Salle   @relation(fields: [salleId], references: [id])
+  userId   String
+  user     User    @relation(fields: [userId], references: [id])
+  score    Int     @default(0)
+  bloque   Boolean @default(false)
 }

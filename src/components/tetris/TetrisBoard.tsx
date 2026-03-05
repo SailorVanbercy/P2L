@@ -19,9 +19,19 @@ import {
 import { QuestionModal } from './QuestionModal'
 import { GameOver } from './GameOver'
 import { LevelBanner } from './LevelBanner'
+import { MobileControls } from './MobileControls'
+import { useTouchControls } from '@/hooks/useTouchControls'
 import type { QuestionData, NiveauData } from '@/types'
 
-const CELL = 32
+const CELL_SIZES = { mobile: 24, tablet: 28, desktop: 30 }
+
+function getCellSize(): number {
+  if (typeof window === 'undefined') return CELL_SIZES.desktop
+  if (window.innerWidth < 640) return CELL_SIZES.mobile
+  if (window.innerWidth < 1024) return CELL_SIZES.tablet
+  return CELL_SIZES.desktop
+}
+
 const COLORS = [
   '#1a1a2e', // 0 = empty
   '#06b6d4', // 1 = I (cyan)
@@ -33,22 +43,22 @@ const COLORS = [
   '#f97316', // 7 = L (orange)
 ]
 
-function drawBoard(ctx: CanvasRenderingContext2D, board: Board) {
+function drawBoard(ctx: CanvasRenderingContext2D, board: Board, cell: number) {
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
       ctx.fillStyle = COLORS[board[r][c]] ?? COLORS[0]
-      ctx.fillRect(c * CELL + 1, r * CELL + 1, CELL - 2, CELL - 2)
+      ctx.fillRect(c * cell + 1, r * cell + 1, cell - 2, cell - 2)
     }
   }
 }
 
-function drawPiece(ctx: CanvasRenderingContext2D, piece: Piece, ghost = false) {
+function drawPiece(ctx: CanvasRenderingContext2D, piece: Piece, cell: number, ghost = false) {
   ctx.globalAlpha = ghost ? 0.25 : 1
   ctx.fillStyle = COLORS[piece.color]
   for (let r = 0; r < piece.shape.length; r++) {
     for (let c = 0; c < piece.shape[r].length; c++) {
       if (!piece.shape[r][c]) continue
-      ctx.fillRect((piece.x + c) * CELL + 1, (piece.y + r) * CELL + 1, CELL - 2, CELL - 2)
+      ctx.fillRect((piece.x + c) * cell + 1, (piece.y + r) * cell + 1, cell - 2, cell - 2)
     }
   }
   ctx.globalAlpha = 1
@@ -62,6 +72,14 @@ function ghostPiece(board: Board, piece: Piece): Piece {
   return ghost
 }
 
+export interface TetrisHandlers {
+  moveLeft: () => void
+  moveRight: () => void
+  rotate: () => void
+  softDrop: () => void
+  hardDrop: () => void
+}
+
 interface Props {
   niveau: NiveauData
   questions: QuestionData[]
@@ -73,6 +91,8 @@ type GameStatus = 'playing' | 'question' | 'gameover' | 'victory'
 
 export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const cellSizeRef = useRef(getCellSize())
 
   const boardRef = useRef<Board>(createEmptyBoard())
   const currentRef = useRef<Piece>(randomPiece())
@@ -93,6 +113,7 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
   const [nextPiece, setNextPiece] = useState<Piece>(nextRef.current)
   const [currentQuestion, setCurrentQuestion] = useState<QuestionData | null>(null)
   const [reussi, setReussi] = useState(false)
+  const [cellSize, setCellSize] = useState(getCellSize())
 
   const shuffledQuestions = useRef<QuestionData[]>([])
 
@@ -123,11 +144,28 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
     shuffledQuestions.current = [...questions].sort(() => Math.random() - 0.5)
   }, [questions])
 
+  // ResizeObserver for adaptive canvas
+  useEffect(() => {
+    const observer = new ResizeObserver(() => {
+      const size = getCellSize()
+      cellSizeRef.current = size
+      setCellSize(size)
+      const canvas = canvasRef.current
+      if (canvas) {
+        canvas.width = COLS * size
+        canvas.height = ROWS * size
+      }
+    })
+    observer.observe(document.body)
+    return () => observer.disconnect()
+  }, [])
+
   const draw = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
     if (!ctx) return
+    const cell = cellSizeRef.current
 
     ctx.fillStyle = '#0a0a14'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -137,27 +175,27 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
     ctx.lineWidth = 0.5
     for (let r = 0; r <= ROWS; r++) {
       ctx.beginPath()
-      ctx.moveTo(0, r * CELL)
-      ctx.lineTo(COLS * CELL, r * CELL)
+      ctx.moveTo(0, r * cell)
+      ctx.lineTo(COLS * cell, r * cell)
       ctx.stroke()
     }
     for (let c = 0; c <= COLS; c++) {
       ctx.beginPath()
-      ctx.moveTo(c * CELL, 0)
-      ctx.lineTo(c * CELL, ROWS * CELL)
+      ctx.moveTo(c * cell, 0)
+      ctx.lineTo(c * cell, ROWS * cell)
       ctx.stroke()
     }
 
-    drawBoard(ctx, boardRef.current)
+    drawBoard(ctx, boardRef.current, cell)
 
     const current = currentRef.current
     const ghost = ghostPiece(boardRef.current, current)
-    drawPiece(ctx, ghost, true)
-    drawPiece(ctx, current)
+    drawPiece(ctx, ghost, cell, true)
+    drawPiece(ctx, current, cell)
   }, [])
 
   const lockAndProceed = useCallback(async () => {
-    let board = lockPiece(boardRef.current, currentRef.current)
+    const board = lockPiece(boardRef.current, currentRef.current)
     const { board: clearedBoard, linesCleared } = clearLines(board)
     boardRef.current = clearedBoard
 
@@ -180,7 +218,6 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
     if (isGameOver(clearedBoard, currentRef.current)) {
       statusRef.current = 'gameover'
       setStatus('gameover')
-      // Save score
       await fetch('/api/scores', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -231,54 +268,81 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
     return () => cancelAnimationFrame(rafRef.current)
   }, [tick])
 
+  // Game action handlers (exposed for mobile controls)
+  const handlers: TetrisHandlers = {
+    moveLeft: () => {
+      if (statusRef.current !== 'playing') return
+      const p = currentRef.current
+      if (isValidPosition(boardRef.current, p, -1, 0)) {
+        currentRef.current = { ...p, x: p.x - 1 }
+      }
+    },
+    moveRight: () => {
+      if (statusRef.current !== 'playing') return
+      const p = currentRef.current
+      if (isValidPosition(boardRef.current, p, 1, 0)) {
+        currentRef.current = { ...p, x: p.x + 1 }
+      }
+    },
+    rotate: () => {
+      if (statusRef.current !== 'playing') return
+      const p = currentRef.current
+      const rotated = rotatePiece(p.shape)
+      if (isValidPosition(boardRef.current, p, 0, 0, rotated)) {
+        currentRef.current = { ...p, shape: rotated }
+      }
+    },
+    softDrop: () => {
+      if (statusRef.current !== 'playing') return
+      const p = currentRef.current
+      if (isValidPosition(boardRef.current, p, 0, 1)) {
+        currentRef.current = { ...p, y: p.y + 1 }
+        scoreRef.current += 1
+        setScore(scoreRef.current)
+      } else {
+        lockAndProceed()
+      }
+    },
+    hardDrop: () => {
+      if (statusRef.current !== 'playing') return
+      const p = currentRef.current
+      const ghost = ghostPiece(boardRef.current, p)
+      scoreRef.current += (ghost.y - p.y) * 2
+      currentRef.current = ghost
+      lockAndProceed()
+    },
+  }
+
+  // Touch controls for mobile
+  useTouchControls(containerRef, handlers)
+
   // Keyboard controls
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (statusRef.current !== 'playing') return
 
-      const p = currentRef.current
-      const board = boardRef.current
-
       switch (e.code) {
         case 'ArrowLeft':
           e.preventDefault()
-          if (isValidPosition(board, p, -1, 0)) {
-            currentRef.current = { ...p, x: p.x - 1 }
-          }
+          handlers.moveLeft()
           break
         case 'ArrowRight':
           e.preventDefault()
-          if (isValidPosition(board, p, 1, 0)) {
-            currentRef.current = { ...p, x: p.x + 1 }
-          }
+          handlers.moveRight()
           break
         case 'ArrowDown':
           e.preventDefault()
-          if (isValidPosition(board, p, 0, 1)) {
-            currentRef.current = { ...p, y: p.y + 1 }
-            scoreRef.current += 1
-            setScore(scoreRef.current)
-          } else {
-            lockAndProceed()
-          }
+          handlers.softDrop()
           break
         case 'ArrowUp':
-        case 'KeyX': {
+        case 'KeyX':
           e.preventDefault()
-          const rotated = rotatePiece(p.shape)
-          if (isValidPosition(board, p, 0, 0, rotated)) {
-            currentRef.current = { ...p, shape: rotated }
-          }
+          handlers.rotate()
           break
-        }
-        case 'Space': {
+        case 'Space':
           e.preventDefault()
-          const ghost = ghostPiece(board, p)
-          scoreRef.current += (ghost.y - p.y) * 2
-          currentRef.current = ghost
-          lockAndProceed()
+          handlers.hardDrop()
           break
-        }
       }
     }
 
@@ -289,7 +353,6 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
   async function handleCorrect() {
     setCurrentQuestion(null)
 
-    // Victoire : toutes les questions ont été répondues correctement
     if (questionIndexRef.current >= shuffledQuestions.current.length) {
       cancelAnimationFrame(rafRef.current)
       statusRef.current = 'gameover'
@@ -321,7 +384,6 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
     statusRef.current = 'gameover'
     setStatus('gameover')
     cancelAnimationFrame(rafRef.current)
-    // Save failed score
     await fetch('/api/scores', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -344,13 +406,14 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
   }
 
   return (
-    <div className="flex items-start gap-6">
-      <div className="relative">
+    <div className="flex flex-col lg:flex-row gap-4 items-center lg:items-start justify-center p-2 lg:p-6">
+      <div className="relative" ref={containerRef}>
         <canvas
           ref={canvasRef}
-          width={COLS * CELL}
-          height={ROWS * CELL}
-          className="rounded-xl border border-white/10 shadow-2xl"
+          width={COLS * cellSize}
+          height={ROWS * cellSize}
+          className="rounded-xl border border-white/10 shadow-2xl mx-auto lg:mx-0"
+          style={{ touchAction: 'none' }}
         />
         {status === 'gameover' && (
           <GameOver
@@ -359,7 +422,7 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
             reussi={reussi}
             niveauTitre={niveau.titre}
             onRestart={handleRestart}
-            onHome={() => window.location.href = '/play'}
+            onHome={() => (window.location.href = '/play')}
           />
         )}
         {status === 'question' && currentQuestion && (
@@ -371,14 +434,22 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
         )}
       </div>
 
-      <LevelBanner
-        niveau={niveau}
-        score={score}
-        blocsPlaces={blocsPlaces}
-        lines={lines}
-        nextPieceShape={nextPiece.shape}
-        nextPieceColor={nextPiece.color}
-      />
+      {/* Info panel: row on mobile, column on desktop */}
+      <div className="w-full lg:w-48 flex flex-row lg:flex-col gap-4 justify-center flex-wrap">
+        <LevelBanner
+          niveau={niveau}
+          score={score}
+          blocsPlaces={blocsPlaces}
+          lines={lines}
+          nextPieceShape={nextPiece.shape}
+          nextPieceColor={nextPiece.color}
+        />
+      </div>
+
+      {/* Mobile controls — visible only on mobile/tablet */}
+      <MobileControls handlers={handlers} />
     </div>
   )
 }
+
+export type { Props as TetrisBoardProps }

@@ -14,8 +14,8 @@ export default async function AdminScoresPage() {
     <div className="mx-auto max-w-5xl">
       <h1 className="mb-8 text-2xl font-bold text-white">Tous les scores</h1>
 
-      <div className="rounded-xl border border-white/10 bg-white/5 overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="rounded-xl border border-white/10 bg-white/5 overflow-x-auto">
+        <table className="w-full text-xs lg:text-sm min-w-[600px]">
           <thead>
             <tr className="border-b border-white/10 text-left text-xs uppercase tracking-widest text-slate-500">
               <th className="px-4 py-3">Joueur</th>

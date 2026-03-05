@@ -26,22 +26,22 @@ export function QuestionModal({ question, onCorrect, onWrong }: Props) {
   }
 
   function getChoiceClass(index: number) {
-    const base = 'w-full rounded-lg border px-4 py-3 text-left text-sm font-medium transition-colors'
-    if (!answered) return `${base} border-white/10 bg-white/5 text-white hover:bg-white/10 cursor-pointer`
+    const base = 'w-full rounded-xl border-2 p-3 lg:p-4 text-left text-sm lg:text-base font-medium transition-all'
+    if (!answered) return `${base} border-white/10 bg-white/5 text-white hover:border-blue-500 hover:bg-blue-500/10 cursor-pointer`
     if (index === question.bonneReponse) return `${base} border-green-500 bg-green-500/20 text-green-300`
     if (index === selected) return `${base} border-red-500 bg-red-500/20 text-red-300`
     return `${base} border-white/5 bg-white/5 text-slate-500`
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4">
-      <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#12121a] p-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-3 lg:p-8">
+      <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#12121a] p-4 lg:p-8 shadow-2xl">
         <div className="mb-1 text-xs font-semibold uppercase tracking-widest text-indigo-400">
           Question
         </div>
-        <p className="mb-6 text-lg font-semibold leading-snug text-white">{question.texte}</p>
+        <p className="mb-4 lg:mb-6 text-base lg:text-xl font-bold leading-snug text-white">{question.texte}</p>
 
-        <div className="flex flex-col gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {question.choix.map((choix, i) => (
             <button key={i} className={getChoiceClass(i)} onClick={() => handleChoice(i)}>
               <span className="mr-2 font-bold text-indigo-400">{String.fromCharCode(65 + i)}.</span>

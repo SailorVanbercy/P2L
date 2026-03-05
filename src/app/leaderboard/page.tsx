@@ -27,51 +27,53 @@ export default async function LeaderboardPage() {
   })
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] px-6 py-8">
-      <header className="mb-8 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-white">Classement</h1>
-        <Link href="/play" className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300 hover:bg-white/10">
+    <div className="min-h-screen bg-[#0a0a0f] px-4 py-6 lg:px-6 lg:py-8">
+      <header className="mb-6 lg:mb-8 flex items-center justify-between">
+        <h1 className="text-xl lg:text-2xl font-bold text-white">Classement</h1>
+        <Link href="/play" className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm text-slate-300 hover:bg-white/10">
           ← Jouer
         </Link>
       </header>
 
-      <div className="mx-auto max-w-4xl space-y-8">
+      <div className="mx-auto max-w-4xl space-y-6 lg:space-y-8">
         {topByNiveau.map(({ niveau, scores: nScores }) => (
-          <div key={niveau.id} className="rounded-xl border border-white/10 bg-white/5 p-6">
-            <h2 className="mb-4 text-lg font-semibold text-white">
+          <div key={niveau.id} className="rounded-xl border border-white/10 bg-white/5 p-4 lg:p-6">
+            <h2 className="mb-3 lg:mb-4 text-base lg:text-lg font-semibold text-white">
               <span className="mr-2 text-indigo-400">Niveau {niveau.numero}</span>
-              <span className="text-slate-400 text-sm font-normal">{niveau.titre}</span>
+              <span className="text-slate-400 text-xs lg:text-sm font-normal">{niveau.titre}</span>
             </h2>
 
             {nScores.length === 0 ? (
-              <p className="text-sm text-slate-500">Aucun score enregistré.</p>
+              <p className="text-sm text-slate-500">Aucun score enregistre.</p>
             ) : (
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-left text-xs uppercase tracking-widest text-slate-500">
-                    <th className="pb-2 pr-4">#</th>
-                    <th className="pb-2 pr-4">Joueur</th>
-                    <th className="pb-2 pr-4">Score</th>
-                    <th className="pb-2 pr-4">Blocs</th>
-                    <th className="pb-2">Résultat</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {nScores.map((s, i) => (
-                    <tr key={s.id} className="border-t border-white/5">
-                      <td className="py-2 pr-4 font-bold text-slate-400">{i + 1}</td>
-                      <td className="py-2 pr-4 text-white">{s.user.nom}</td>
-                      <td className="py-2 pr-4 font-mono text-indigo-300">{s.score.toLocaleString()}</td>
-                      <td className="py-2 pr-4 text-slate-300">{s.blocsPlaces}</td>
-                      <td className="py-2">
-                        <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${s.reussi ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
-                          {s.reussi ? 'Réussi' : 'Échoué'}
-                        </span>
-                      </td>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs lg:text-sm">
+                  <thead>
+                    <tr className="text-left text-[10px] lg:text-xs uppercase tracking-widest text-slate-500">
+                      <th className="pb-2 pr-3 lg:pr-4">#</th>
+                      <th className="pb-2 pr-3 lg:pr-4">Joueur</th>
+                      <th className="pb-2 pr-3 lg:pr-4">Score</th>
+                      <th className="pb-2 pr-3 lg:pr-4 hidden sm:table-cell">Blocs</th>
+                      <th className="pb-2">Resultat</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {nScores.map((s, i) => (
+                      <tr key={s.id} className="border-t border-white/5">
+                        <td className="py-2 pr-3 lg:pr-4 font-bold text-slate-400">{i + 1}</td>
+                        <td className="py-2 pr-3 lg:pr-4 text-white">{s.user.nom}</td>
+                        <td className="py-2 pr-3 lg:pr-4 font-mono text-indigo-300">{s.score.toLocaleString()}</td>
+                        <td className="py-2 pr-3 lg:pr-4 text-slate-300 hidden sm:table-cell">{s.blocsPlaces}</td>
+                        <td className="py-2">
+                          <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${s.reussi ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                            {s.reussi ? 'Reussi' : 'Echoue'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         ))}

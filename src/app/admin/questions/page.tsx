@@ -30,7 +30,7 @@ export default async function AdminQuestionsPage() {
                     <span className="mr-2 text-slate-500">{i + 1}.</span>
                     {q.texte}
                   </p>
-                  <div className="grid grid-cols-2 gap-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                     {q.choix.map((c, ci) => (
                       <span
                         key={ci}
