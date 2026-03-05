@@ -381,6 +381,11 @@ export default function MultiPlayPage() {
     const data = await res.json()
     // Resume playing immediately after answering
     pausedRef.current = false
+    // Add question points to local score
+    if (data.correct && data.points) {
+      scoreRef.current += data.points
+      setScore(scoreRef.current)
+    }
     // Show explication locally only if correct, auto-hide after 4s
     if (data.correct && data.explication) {
       setLocalExplication(data.explication)
