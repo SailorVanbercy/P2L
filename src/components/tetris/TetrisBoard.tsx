@@ -117,11 +117,10 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
   const [reussi, setReussi] = useState(false)
   const [cellSize, setCellSize] = useState(getCellSize())
 
-  const shuffledQuestions = useRef<QuestionData[]>([])
+  const orderedQuestions = useRef<QuestionData[]>([])
 
   const resetGame = useCallback(() => {
-    const shuffled = [...questions].sort(() => Math.random() - 0.5)
-    shuffledQuestions.current = shuffled
+    orderedQuestions.current = questions
     boardRef.current = createEmptyBoard()
     currentRef.current = randomPiece()
     nextRef.current = randomPiece()
@@ -141,9 +140,8 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
     setReussi(false)
   }, [questions])
 
-  // Initial shuffle
   useEffect(() => {
-    shuffledQuestions.current = [...questions].sort(() => Math.random() - 0.5)
+    orderedQuestions.current = questions
   }, [questions])
 
   // ResizeObserver for adaptive canvas
@@ -237,8 +235,8 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
     if (blocsRef.current > 0 && blocsRef.current % BLOCS_AVANT_QUESTION === 0) {
       statusRef.current = 'question'
       setStatus('question')
-      const qi = questionIndexRef.current % shuffledQuestions.current.length
-      setCurrentQuestion(shuffledQuestions.current[qi])
+      const qi = questionIndexRef.current % orderedQuestions.current.length
+      setCurrentQuestion(orderedQuestions.current[qi])
       questionIndexRef.current += 1
       questionStartTimeRef.current = Date.now()
     }
@@ -362,7 +360,7 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
 
     setCurrentQuestion(null)
 
-    if (questionIndexRef.current >= shuffledQuestions.current.length) {
+    if (questionIndexRef.current >= orderedQuestions.current.length) {
       cancelAnimationFrame(rafRef.current)
       statusRef.current = 'gameover'
       setStatus('gameover')

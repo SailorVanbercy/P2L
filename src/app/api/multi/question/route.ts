@@ -24,13 +24,26 @@ export async function POST(req: Request) {
 
   const questions = await prisma.question.findMany({
     where: { niveauId: parsed.data.niveauId },
+    orderBy: { id: 'asc' },
   })
 
   if (questions.length === 0) {
     return NextResponse.json({ error: 'Aucune question' }, { status: 404 })
   }
 
-  const question = questions[Math.floor(Math.random() * questions.length)]
+  // Get the current salle to find the last question
+  const salle = await prisma.salle.findUnique({
+    where: { id: parsed.data.salleId },
+    select: { currentQuestionId: true },
+  })
+
+  // Find the next question in order
+  let question = questions[0]
+  if (salle?.currentQuestionId) {
+    const currentIndex = questions.findIndex((q) => q.id === salle.currentQuestionId)
+    const nextIndex = (currentIndex + 1) % questions.length
+    question = questions[nextIndex]
+  }
 
   // Store current question and reset joueurQuiRepond
   await prisma.salle.update({
