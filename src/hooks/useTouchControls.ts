@@ -1,67 +1,66 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
-import type { TetrisHandlers } from '@/components/tetris/TetrisBoard'
+import { useEffect, type RefObject } from 'react'
 
-const THRESHOLD = 30 // px minimum pour déclencher un swipe
+interface TouchHandlers {
+  moveLeft: () => void
+  moveRight: () => void
+  softDrop: () => void
+  rotate: () => void
+  hardDrop: () => void
+}
+
+const THRESHOLD = 30
+const TAP_MAX_DURATION = 200
 
 export function useTouchControls(
-  containerRef: React.RefObject<HTMLElement | null>,
-  handlers: TetrisHandlers
+  canvasRef: RefObject<HTMLCanvasElement | null>,
+  handlers: TouchHandlers,
+  enabled: boolean
 ) {
-  const touchStart = useRef<{ x: number; y: number } | null>(null)
-
   useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
+    const canvas = canvasRef.current
+    if (!canvas) return
 
-    function onTouchStart(e: TouchEvent) {
-      touchStart.current = {
-        x: e.touches[0].clientX,
-        y: e.touches[0].clientY,
-      }
+    let startX = 0
+    let startY = 0
+    let startTime = 0
+
+    const onTouchStart = (e: TouchEvent) => {
+      e.preventDefault()
+      startX = e.touches[0].clientX
+      startY = e.touches[0].clientY
+      startTime = Date.now()
     }
 
-    function onTouchEnd(e: TouchEvent) {
-      if (!touchStart.current) return
+    const onTouchEnd = (e: TouchEvent) => {
+      e.preventDefault()
+      if (!enabled) return
 
-      const dx = e.changedTouches[0].clientX - touchStart.current.x
-      const dy = e.changedTouches[0].clientY - touchStart.current.y
+      const dx = e.changedTouches[0].clientX - startX
+      const dy = e.changedTouches[0].clientY - startY
       const absDx = Math.abs(dx)
       const absDy = Math.abs(dy)
+      const duration = Date.now() - startTime
 
-      if (Math.max(absDx, absDy) < THRESHOLD) {
-        // Tap = rotation
-        handlers.rotate()
-        touchStart.current = null
+      if (absDx < THRESHOLD && absDy < THRESHOLD) {
+        if (duration < TAP_MAX_DURATION) handlers.rotate()
         return
       }
 
       if (absDx > absDy) {
-        // Horizontal swipe
-        if (dx > 0) {
-          handlers.moveRight()
-        } else {
-          handlers.moveLeft()
-        }
+        dx > 0 ? handlers.moveRight() : handlers.moveLeft()
       } else {
-        // Vertical swipe
-        if (dy > 0) {
-          handlers.softDrop()
-        } else {
-          handlers.rotate()
-        }
+        dy > 0 ? handlers.softDrop() : handlers.rotate()
       }
-
-      touchStart.current = null
     }
 
-    el.addEventListener('touchstart', onTouchStart, { passive: true })
-    el.addEventListener('touchend', onTouchEnd, { passive: true })
+    canvas.addEventListener('touchstart', onTouchStart, { passive: false })
+    canvas.addEventListener('touchend', onTouchEnd, { passive: false })
 
     return () => {
-      el.removeEventListener('touchstart', onTouchStart)
-      el.removeEventListener('touchend', onTouchEnd)
+      canvas.removeEventListener('touchstart', onTouchStart)
+      canvas.removeEventListener('touchend', onTouchEnd)
     }
-  }, [containerRef, handlers])
+  }, [canvasRef, handlers, enabled])
 }

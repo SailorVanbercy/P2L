@@ -63,14 +63,16 @@ model Score {
 }
 
 model Salle {
-  id        String        @id @default(cuid())
-  code      String        @unique
-  niveauId  Int
-  niveau    Niveau        @relation(fields: [niveauId], references: [id])
-  hostId    String
-  statut    StatutSalle   @default(ATTENTE)
-  joueurs   SalleJoueur[]
-  createdAt DateTime      @default(now())
+  id                String        @id @default(cuid())
+  code              String        @unique
+  niveauId          Int
+  niveau            Niveau        @relation(fields: [niveauId], references: [id])
+  hostId            String
+  statut            StatutSalle   @default(ATTENTE)
+  joueurQuiRepond   String?
+  currentQuestionId Int?
+  joueurs           SalleJoueur[]
+  createdAt         DateTime      @default(now())
 }
 
 model SalleJoueur {

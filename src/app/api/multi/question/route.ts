@@ -32,6 +32,12 @@ export async function POST(req: Request) {
 
   const question = questions[Math.floor(Math.random() * questions.length)]
 
+  // Store current question and reset joueurQuiRepond
+  await prisma.salle.update({
+    where: { id: parsed.data.salleId },
+    data: { currentQuestionId: question.id, joueurQuiRepond: null },
+  })
+
   // Do NOT include bonneReponse in the Pusher payload
   await pusherServer.trigger(`salle-${parsed.data.salleId}`, 'question-affichee', {
     id: question.id,

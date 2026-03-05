@@ -22,9 +22,11 @@ interface MultiGameState {
   question: QuestionMultiData | null
   showLeverMain: boolean
   joueurQuiRepond: string | null
+  joueurRepondId: string | null
   joueurBloque: string | null
   explication: string | null
   scores: ScoreEntry[]
+  pusherReady: boolean
 }
 
 export function useMultiGame(salleId: string) {
@@ -34,9 +36,11 @@ export function useMultiGame(salleId: string) {
     question: null,
     showLeverMain: false,
     joueurQuiRepond: null,
+    joueurRepondId: null,
     joueurBloque: null,
     explication: null,
     scores: [],
+    pusherReady: false,
   })
 
   const resetQuestion = useCallback(() => {
@@ -45,14 +49,21 @@ export function useMultiGame(salleId: string) {
       question: null,
       showLeverMain: false,
       joueurQuiRepond: null,
+      joueurRepondId: null,
       joueurBloque: null,
       explication: null,
     }))
   }, [])
 
   useEffect(() => {
+    if (!salleId) return
+
     const pusher = getPusherClient()
     const channel = pusher.subscribe(`salle-${salleId}`)
+
+    channel.bind('pusher:subscription_succeeded', () => {
+      setState((s) => ({ ...s, pusherReady: true }))
+    })
 
     channel.bind('joueur-rejoint', (data: { joueurNom: string }) => {
       setState((s) => ({
@@ -71,16 +82,23 @@ export function useMultiGame(salleId: string) {
         question: data,
         showLeverMain: true,
         joueurQuiRepond: null,
+        joueurRepondId: null,
         joueurBloque: null,
         explication: null,
       }))
     })
 
-    channel.bind('main-levee', (data: { joueurNom: string }) => {
+    channel.bind('main-levee', (data: {
+      joueurNom: string
+      joueurId: string
+      question: QuestionMultiData | null
+    }) => {
       setState((s) => ({
         ...s,
         joueurQuiRepond: data.joueurNom,
+        joueurRepondId: data.joueurId,
         showLeverMain: false,
+        question: data.question ?? s.question,
       }))
     })
 
@@ -90,7 +108,6 @@ export function useMultiGame(salleId: string) {
         explication: data.explication,
         scores: data.scores,
       }))
-      // Resume game after 2s
       setTimeout(() => {
         resetQuestion()
       }, 2000)
@@ -101,11 +118,13 @@ export function useMultiGame(salleId: string) {
         ...s,
         joueurBloque: data.joueurNom,
         joueurQuiRepond: null,
+        joueurRepondId: null,
         showLeverMain: true,
       }))
     })
 
     return () => {
+      channel.unbind_all()
       pusher.unsubscribe(`salle-${salleId}`)
     }
   }, [salleId, resetQuestion])

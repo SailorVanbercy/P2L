@@ -16,12 +16,13 @@ import {
   rotatePiece,
   lockPiece,
   clearLines,
-  calcScore,
   isGameOver,
   type Board,
   type Piece,
 } from '@/components/tetris/TetrisEngine'
 import { MobileControls } from '@/components/tetris/MobileControls'
+import { useTouchControls } from '@/hooks/useTouchControls'
+import { SCORING, calculerPointsLignes } from '@/lib/scoring'
 import type { TetrisHandlers } from '@/components/tetris/TetrisBoard'
 
 const CELL_SIZES = { mobile: 24, tablet: 28, desktop: 30 }
@@ -193,9 +194,8 @@ export default function MultiPlayPage() {
     boardRef.current = clearedBoard
 
     blocsRef.current += 1
-    const lineScore = calcScore(linesCleared, niveauNumero)
-    const pieceScore = 10 * niveauNumero
-    scoreRef.current += pieceScore + lineScore
+    const lineScore = calculerPointsLignes(linesCleared)
+    scoreRef.current += SCORING.PIECE_POSEE + lineScore
 
     setScore(scoreRef.current)
     setBlocsPlaces(blocsRef.current)
@@ -283,11 +283,14 @@ export default function MultiPlayPage() {
       if (pausedRef.current) return
       const p = currentRef.current
       const ghost = ghostPiece(boardRef.current, p)
-      scoreRef.current += (ghost.y - p.y) * 2
+      scoreRef.current += (ghost.y - p.y) * SCORING.HARD_DROP_PAR_CASE
       currentRef.current = ghost
       lockAndProceed()
     },
   }
+
+  // Touch controls for mobile
+  useTouchControls(canvasRef, handlers, !pausedRef.current)
 
   // Keyboard controls
   useEffect(() => {
@@ -328,8 +331,7 @@ export default function MultiPlayPage() {
   }
 
   const userId = session?.user?.id ?? ''
-  const isRespondeur = multi.joueurQuiRepond !== null &&
-    multi.scores.find((s) => s.joueurNom === multi.joueurQuiRepond)?.joueurId === userId
+  const isRespondeur = multi.joueurRepondId === userId && multi.joueurRepondId !== null
 
   return (
     <div className="flex min-h-screen flex-col bg-[#0a0a0f] px-3 py-3 lg:px-6 lg:py-6">
@@ -346,7 +348,7 @@ export default function MultiPlayPage() {
             width={COLS * cellSize}
             height={ROWS * cellSize}
             className="rounded-xl border border-white/10 shadow-2xl"
-            style={{ touchAction: 'none' }}
+            style={{ touchAction: 'none', userSelect: 'none' }}
           />
         </div>
 

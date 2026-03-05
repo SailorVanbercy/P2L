@@ -4,7 +4,6 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { pusherServer } from '@/lib/pusher'
 import { z } from 'zod'
-import { mainLevee } from '../lever-main/route'
 
 const schema = z.object({
   salleId: z.string(),
@@ -49,14 +48,17 @@ export async function POST(req: Request) {
       data: { score: { increment: 150 } },
     })
 
+    // Reset joueurQuiRepond and currentQuestionId
+    await prisma.salle.update({
+      where: { id: salleId },
+      data: { joueurQuiRepond: null, currentQuestionId: null },
+    })
+
     const scores = await prisma.salleJoueur.findMany({
       where: { salleId },
       include: { user: { select: { nom: true } } },
       orderBy: { score: 'desc' },
     })
-
-    // Clear lock
-    mainLevee.delete(salleId)
 
     await pusherServer.trigger(`salle-${salleId}`, 'reponse-correcte', {
       joueurNom,
@@ -76,8 +78,11 @@ export async function POST(req: Request) {
       data: { bloque: true },
     })
 
-    // Clear lock so others can raise hand
-    mainLevee.delete(salleId)
+    // Reset joueurQuiRepond so others can raise hand
+    await prisma.salle.update({
+      where: { id: salleId },
+      data: { joueurQuiRepond: null },
+    })
 
     await pusherServer.trigger(`salle-${salleId}`, 'reponse-incorrecte', {
       joueurNom,

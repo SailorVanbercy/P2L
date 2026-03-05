@@ -9,9 +9,6 @@ const schema = z.object({
   salleId: z.string(),
 })
 
-// In-memory lock for "first to raise hand" per salle
-const mainLevee = new Map<string, string>()
-
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions)
   if (!session?.user?.id) {
@@ -27,39 +24,62 @@ export async function POST(req: Request) {
   const { salleId } = parsed.data
   const userId = session.user.id
 
-  // Check if player is blocked
-  const joueur = await prisma.salleJoueur.findFirst({
-    where: { salleId, userId },
-  })
+  try {
+    const result = await prisma.$transaction(async (tx) => {
+      const salle = await tx.salle.findUnique({
+        where: { id: salleId },
+        select: { joueurQuiRepond: true, currentQuestionId: true },
+      })
 
-  if (!joueur) {
-    return NextResponse.json({ error: 'Joueur non trouve dans la salle' }, { status: 404 })
+      if (!salle) throw new Error('SALLE_NOT_FOUND')
+      if (salle.joueurQuiRepond) throw new Error('DEJA_PRIS')
+
+      const salleJoueur = await tx.salleJoueur.findFirst({
+        where: { salleId, userId },
+      })
+
+      if (!salleJoueur) throw new Error('JOUEUR_NOT_FOUND')
+      if (salleJoueur.bloque) throw new Error('JOUEUR_BLOQUE')
+
+      await tx.salle.update({
+        where: { id: salleId },
+        data: { joueurQuiRepond: userId },
+      })
+
+      let question = null
+      if (salle.currentQuestionId) {
+        question = await tx.question.findUnique({
+          where: { id: salle.currentQuestionId },
+          select: { id: true, texte: true, choix: true, niveauId: true },
+        })
+      }
+
+      return { question }
+    })
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { nom: true },
+    })
+
+    await pusherServer.trigger(`salle-${salleId}`, 'main-levee', {
+      joueurNom: user?.nom ?? 'Joueur',
+      joueurId: userId,
+      question: result.question,
+    })
+
+    return NextResponse.json({ ok: true })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Erreur'
+    if (message === 'DEJA_PRIS') {
+      return NextResponse.json({ error: 'Un autre joueur a deja leve la main' }, { status: 409 })
+    }
+    if (message === 'JOUEUR_BLOQUE') {
+      return NextResponse.json({ error: 'Joueur bloque' }, { status: 403 })
+    }
+    if (message === 'JOUEUR_NOT_FOUND') {
+      return NextResponse.json({ error: 'Joueur non trouve dans la salle' }, { status: 404 })
+    }
+    return NextResponse.json({ error: message }, { status: 500 })
   }
-
-  if (joueur.bloque) {
-    return NextResponse.json({ error: 'Joueur bloque' }, { status: 403 })
-  }
-
-  // Check if someone already raised their hand
-  if (mainLevee.has(salleId)) {
-    return NextResponse.json({ error: 'Un autre joueur a deja leve la main' }, { status: 409 })
-  }
-
-  // Lock
-  mainLevee.set(salleId, userId)
-
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { nom: true },
-  })
-
-  await pusherServer.trigger(`salle-${salleId}`, 'main-levee', {
-    joueurNom: user?.nom ?? 'Joueur',
-    joueurId: userId,
-  })
-
-  return NextResponse.json({ ok: true })
 }
-
-// Export to allow clearing from repondre route
-export { mainLevee }

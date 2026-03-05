@@ -11,7 +11,6 @@ import {
   rotatePiece,
   lockPiece,
   clearLines,
-  calcScore,
   isGameOver,
   type Board,
   type Piece,
@@ -21,6 +20,7 @@ import { GameOver } from './GameOver'
 import { LevelBanner } from './LevelBanner'
 import { MobileControls } from './MobileControls'
 import { useTouchControls } from '@/hooks/useTouchControls'
+import { SCORING, calculerPointsReponse, calculerPointsLignes } from '@/lib/scoring'
 import type { QuestionData, NiveauData } from '@/types'
 
 const CELL_SIZES = { mobile: 24, tablet: 28, desktop: 30 }
@@ -104,9 +104,11 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
   const rafRef = useRef<number>(0)
   const lastTickRef = useRef(0)
   const statusRef = useRef<GameStatus>('playing')
+  const questionStartTimeRef = useRef(0)
 
   // Re-render state
   const [score, setScore] = useState(0)
+  const [showBonus, setShowBonus] = useState<number | null>(null)
   const [blocsPlaces, setBlocsPlaces] = useState(0)
   const [lines, setLines] = useState(0)
   const [status, setStatus] = useState<GameStatus>('playing')
@@ -200,9 +202,8 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
     boardRef.current = clearedBoard
 
     blocsRef.current += 1
-    const lineScore = calcScore(linesCleared, niveau.numero)
-    const pieceScore = 10 * niveau.numero
-    scoreRef.current += pieceScore + lineScore
+    const lineScore = calculerPointsLignes(linesCleared)
+    scoreRef.current += SCORING.PIECE_POSEE + lineScore
     linesRef.current += linesCleared
 
     setScore(scoreRef.current)
@@ -239,6 +240,7 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
       const qi = questionIndexRef.current % shuffledQuestions.current.length
       setCurrentQuestion(shuffledQuestions.current[qi])
       questionIndexRef.current += 1
+      questionStartTimeRef.current = Date.now()
     }
   }, [niveau, onScoreSaved])
 
@@ -307,14 +309,14 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
       if (statusRef.current !== 'playing') return
       const p = currentRef.current
       const ghost = ghostPiece(boardRef.current, p)
-      scoreRef.current += (ghost.y - p.y) * 2
+      scoreRef.current += (ghost.y - p.y) * SCORING.HARD_DROP_PAR_CASE
       currentRef.current = ghost
       lockAndProceed()
     },
   }
 
   // Touch controls for mobile
-  useTouchControls(containerRef, handlers)
+  useTouchControls(canvasRef, handlers, statusRef.current === 'playing')
 
   // Keyboard controls
   useEffect(() => {
@@ -351,6 +353,13 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
   }, [lockAndProceed])
 
   async function handleCorrect() {
+    const tempsMs = Date.now() - questionStartTimeRef.current
+    const points = calculerPointsReponse(true, tempsMs)
+    scoreRef.current += points
+    setScore(scoreRef.current)
+    setShowBonus(points)
+    setTimeout(() => setShowBonus(null), 1500)
+
     setCurrentQuestion(null)
 
     if (questionIndexRef.current >= shuffledQuestions.current.length) {
@@ -413,8 +422,18 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
           width={COLS * cellSize}
           height={ROWS * cellSize}
           className="rounded-xl border border-white/10 shadow-2xl mx-auto lg:mx-0"
-          style={{ touchAction: 'none' }}
+          style={{ touchAction: 'none', userSelect: 'none' }}
         />
+        {showBonus !== null && (
+          <div
+            className="absolute inset-0 flex items-center justify-center pointer-events-none z-40"
+            style={{ animation: 'bonusFade 1.5s ease-out forwards' }}
+          >
+            <span className="text-4xl font-black text-yellow-400 drop-shadow-lg">
+              +{showBonus} pts !
+            </span>
+          </div>
+        )}
         {status === 'gameover' && (
           <GameOver
             score={score}
