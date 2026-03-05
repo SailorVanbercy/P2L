@@ -231,11 +231,8 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
       return
     }
 
-    // Skip question if board has blocks in top 2 rows (game over imminent)
-    const boardDangerous = clearedBoard.slice(0, 2).some((row) => row.some((cell) => cell !== 0))
-
     // Trigger question every N blocs
-    if (blocsRef.current > 0 && blocsRef.current % BLOCS_AVANT_QUESTION === 0 && !boardDangerous) {
+    if (blocsRef.current > 0 && blocsRef.current % BLOCS_AVANT_QUESTION === 0) {
       statusRef.current = 'question'
       setStatus('question')
       const qi = questionIndexRef.current % orderedQuestions.current.length
