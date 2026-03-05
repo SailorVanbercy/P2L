@@ -381,9 +381,10 @@ export default function MultiPlayPage() {
     const data = await res.json()
     // Resume playing immediately after answering
     pausedRef.current = false
-    // Show explication locally only if correct
-    if (data.correct) {
-      setLocalExplication(data.explication ?? null)
+    // Show explication locally only if correct, auto-hide after 4s
+    if (data.correct && data.explication) {
+      setLocalExplication(data.explication)
+      setTimeout(() => setLocalExplication(null), 4000)
     }
   }
 

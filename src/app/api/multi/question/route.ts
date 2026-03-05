@@ -31,10 +31,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Aucune question' }, { status: 404 })
   }
 
-  // Get the current salle to find the last question
+  // Get the current salle state
   const salle = await prisma.salle.findUnique({
     where: { id: parsed.data.salleId },
-    select: { currentQuestionId: true },
+    select: { currentQuestionId: true, lastQuestionIndex: true },
   })
 
   // If a question is already active, don't create a new one
@@ -42,14 +42,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ questionId: salle.currentQuestionId })
   }
 
-  // Pick the first question (currentQuestionId is null here, cleared after each round)
-  const question = questions[0]
+  // Pick the next question based on lastQuestionIndex (cycle if exhausted)
+  const idx = (salle?.lastQuestionIndex ?? 0) % questions.length
+  const question = questions[idx]
 
-  // Store current question, timestamp, and reset joueurQuiRepond
+  // Store current question, advance index, and reset state
   await prisma.salle.update({
     where: { id: parsed.data.salleId },
     data: {
       currentQuestionId: question.id,
+      lastQuestionIndex: idx + 1,
       joueurQuiRepond: null,
       questionStartedAt: new Date(),
     },
@@ -59,6 +61,7 @@ export async function POST(req: Request) {
   await pusherServer.trigger(`salle-${parsed.data.salleId}`, 'question-affichee', {
     id: question.id,
     texte: question.texte,
+    source: question.source,
     choix: question.choix,
     niveauId: question.niveauId,
     triggeredByUserId: session.user.id,

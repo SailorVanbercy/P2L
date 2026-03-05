@@ -20,7 +20,7 @@ import { GameOver } from './GameOver'
 import { LevelBanner } from './LevelBanner'
 import { MobileControls } from './MobileControls'
 import { useTouchControls } from '@/hooks/useTouchControls'
-import { SCORING, calculerPointsReponse, calculerPointsLignes } from '@/lib/scoring'
+import { calculerPointsReponse, calculerPointsLignes } from '@/lib/scoring'
 import type { QuestionData, NiveauData } from '@/types'
 
 const CELL_SIZES = { mobile: 24, tablet: 28, desktop: 30 }
@@ -201,7 +201,7 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
 
     blocsRef.current += 1
     const lineScore = calculerPointsLignes(linesCleared)
-    scoreRef.current += SCORING.PIECE_POSEE + lineScore
+    scoreRef.current += lineScore
     linesRef.current += linesCleared
 
     setScore(scoreRef.current)
@@ -297,8 +297,7 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
       const p = currentRef.current
       if (isValidPosition(boardRef.current, p, 0, 1)) {
         currentRef.current = { ...p, y: p.y + 1 }
-        scoreRef.current += 1
-        setScore(scoreRef.current)
+        // no points for soft drop
       } else {
         lockAndProceed()
       }
@@ -307,7 +306,6 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
       if (statusRef.current !== 'playing') return
       const p = currentRef.current
       const ghost = ghostPiece(boardRef.current, p)
-      scoreRef.current += (ghost.y - p.y) * SCORING.HARD_DROP_PAR_CASE
       currentRef.current = ghost
       lockAndProceed()
     },

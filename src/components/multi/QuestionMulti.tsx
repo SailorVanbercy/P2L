@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 interface QuestionData {
   id: number
   texte: string
+  source?: string | null
   choix: string[]
 }
 
@@ -34,10 +35,12 @@ export function QuestionMulti({
   timerSeconds,
 }: Props) {
   const [selected, setSelected] = useState<number | null>(null)
+  const [showSource, setShowSource] = useState(false)
 
-  // Reset selection when question changes
+  // Reset selection and source when question changes
   useEffect(() => {
     setSelected(null)
+    setShowSource(false)
   }, [question.id])
 
   function handleChoice(index: number) {
@@ -48,7 +51,7 @@ export function QuestionMulti({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-3 lg:p-8">
-      <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#12121a] p-4 lg:p-8 shadow-2xl">
+      <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 bg-[#12121a] p-4 lg:p-8 shadow-2xl">
         <div className="mb-1 flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-widest text-indigo-400">
             Question Multi
@@ -58,6 +61,24 @@ export function QuestionMulti({
         <p className="mb-4 lg:mb-6 text-base lg:text-xl font-bold leading-snug text-white">
           {question.texte}
         </p>
+
+        {/* Source text — collapsible */}
+        {question.source && (
+          <div className="mb-4">
+            <button
+              onClick={() => setShowSource(!showSource)}
+              className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              <span>{showSource ? '▼' : '▶'}</span>
+              Consulter la source
+            </button>
+            {showSource && (
+              <div className="mt-2 rounded-lg border border-blue-500/20 bg-blue-500/5 px-4 py-3 text-sm leading-relaxed text-slate-300">
+                {question.source}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Countdown before answers unlock */}
         {!canAnswer && selected === null && countdown > 0 && (

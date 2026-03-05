@@ -39,6 +39,7 @@ async function main() {
       await prisma.question.create({
         data: {
           texte: q.texte,
+          source: q.source ?? null,
           choix: q.choix,
           bonneReponse: q.bonneReponse,
           explication: q.explication,

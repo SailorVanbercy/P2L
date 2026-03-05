@@ -6,6 +6,7 @@ import { getPusherClient } from '@/lib/pusherClient'
 interface QuestionMultiData {
   id: number
   texte: string
+  source: string | null
   choix: string[]
   niveauId: number
   triggeredByUserId: string

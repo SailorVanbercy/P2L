@@ -43,6 +43,7 @@ model Niveau {
 model Question {
   id           Int      @id @default(autoincrement())
   texte        String
+  source       String?
   choix        String[]
   bonneReponse Int
   explication  String?
@@ -70,8 +71,9 @@ model Salle {
   hostId            String
   statut            StatutSalle   @default(ATTENTE)
   joueurQuiRepond   String?
-  currentQuestionId Int?
-  questionStartedAt DateTime?
+  currentQuestionId  Int?
+  questionStartedAt  DateTime?
+  lastQuestionIndex  Int       @default(0)
   joueurs           SalleJoueur[]
   createdAt         DateTime      @default(now())
 }

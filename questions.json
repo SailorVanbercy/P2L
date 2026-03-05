@@ -3,6 +3,7 @@
     "id": 1,
     "categorie": "Fondamentaux du plan d'affaires",
     "texte": "Qu'est-ce qu'un plan d'affaires ?",
+    "source": "Lors de la création d'une entreprise, un document central est rédigé. Il ne se limite pas aux chiffres : il décrit la vision globale du projet, incluant les ambitions de l'entrepreneur et la manière dont il compte les atteindre sur le marché.",
     "choix": [
       "Un simple document financier",
       "Un document reprenant objectifs et stratégie d'entreprise",
@@ -16,6 +17,7 @@
     "id": 2,
     "categorie": "Fondamentaux du plan d'affaires",
     "texte": "Pour quelles sociétés le plan d'affaires est-il obligatoire ?",
+    "source": "Le nouveau Code des sociétés impose la rédaction d'un plan d'affaires pour certaines formes juridiques. Cette obligation concerne les sociétés à responsabilité limitée, les sociétés anonymes et les formes coopératives lors de leur constitution.",
     "choix": [
       "Toutes les entreprises",
       "Seulement les grandes entreprises",
@@ -29,6 +31,7 @@
     "id": 3,
     "categorie": "Fondamentaux du plan d'affaires",
     "texte": "Quelle est la différence principale entre personne physique et société ?",
+    "source": "Quand vous exercez en tant qu'indépendant en personne physique, votre patrimoine personnel et votre patrimoine professionnel ne forment qu'un seul ensemble. En société, ces deux patrimoines sont juridiquement séparés.",
     "choix": [
       "Le montant du capital",
       "La distinction biens privés/professionnels",
@@ -42,6 +45,7 @@
     "id": 4,
     "categorie": "Fondamentaux du plan d'affaires",
     "texte": "Pourquoi parle-t-on de \"plan d'affaires\" et non plus de \"plan financier\" ?",
+    "source": "Avec la réforme du Code des sociétés, le document demandé ne se limite plus aux tableaux financiers. Le législateur exige désormais une présentation du projet, les hypothèses sur lesquelles repose l'activité et une analyse approfondie de l'environnement.",
     "choix": [
       "C'est plus moderne",
       "Pour éviter la complexité",
@@ -55,6 +59,7 @@
     "id": 5,
     "categorie": "Fondamentaux du plan d'affaires",
     "texte": "Combien coûte la constitution d'une SRL ?",
+    "source": "Créer une SRL implique un passage obligatoire chez le notaire et la validation d'un plan financier. L'ensemble des frais notariaux, d'enregistrement et de publication représente un budget qui se situe dans une fourchette de mille cinq cents à deux mille euros.",
     "choix": [
       "200-300 euros",
       "500-800 euros",
@@ -68,6 +73,7 @@
     "id": 6,
     "categorie": "Fondamentaux du plan d'affaires",
     "texte": "Quel est l'objectif principal d'un plan d'affaires ?",
+    "source": "Le plan d'affaires remplit une double fonction : il oblige l'entrepreneur à organiser sa réflexion autour de son projet et il constitue un outil de persuasion auprès des partenaires financiers qui évalueront la solidité de l'activité proposée.",
     "choix": [
       "Faire plaisir aux banques",
       "Structurer le projet et convaincre",
@@ -81,6 +87,7 @@
     "id": 7,
     "categorie": "Fondamentaux du plan d'affaires",
     "texte": "Un plan d'affaires sert-il après le lancement ?",
+    "source": "Une fois l'entreprise lancée, le plan d'affaires ne finit pas dans un tiroir. Les entrepreneurs avisés l'utilisent régulièrement pour comparer leurs prévisions initiales avec la réalité du terrain et adapter leur trajectoire en continu.",
     "choix": [
       "Non, c'est juste pour démarrer",
       "Oui, comme outil de pilotage quotidien",
@@ -94,6 +101,7 @@
     "id": 8,
     "categorie": "Fondamentaux du plan d'affaires",
     "texte": "Combien de parties principales compose un plan d'affaires ?",
+    "source": "Un plan d'affaires complet s'articule autour d'une première section qualitative où l'on décrit le projet, le marché et la stratégie, et d'une seconde section quantitative qui traduit tout cela en chiffres prévisionnels.",
     "choix": [
       "Une seule partie chiffrée",
       "Deux : rédactionnelle et chiffrée",
@@ -107,6 +115,7 @@
     "id": 9,
     "categorie": "Fondamentaux du plan d'affaires",
     "texte": "Pour une société en nom collectif, que faut-il payer ?",
+    "source": "Contrairement à la SRL qui nécessite un notaire, la société en nom collectif a des formalités allégées. Les seuls frais à prévoir sont la publication de l'acte au tribunal de commerce et l'inscription auprès de la banque-carrefour des entreprises.",
     "choix": [
       "Entre 1500-2000 euros",
       "Seulement frais publication et inscription",
@@ -120,6 +129,7 @@
     "id": 10,
     "categorie": "Fondamentaux du plan d'affaires",
     "texte": "Le plan financier peut-il être fait par vos soins ?",
+    "source": "Rien n'oblige l'entrepreneur à confier la rédaction de son plan financier à un professionnel. Il peut le rédiger lui-même, à condition de maîtriser les bases. Toutefois, un regard extérieur qualifié permet de détecter les erreurs et renforce la crédibilité du document.",
     "choix": [
       "Non, obligatoirement par un expert",
       "Oui, mais validation par expert conseillée",
@@ -133,6 +143,7 @@
     "id": 11,
     "categorie": "Fondamentaux du plan d'affaires",
     "texte": "Qui examine le plan d'affaires pour la constitution ?",
+    "source": "Lors de la création d'une société, le plan d'affaires passe par deux interlocuteurs clés. Le premier officialise l'acte de constitution, tandis que le second vérifie la cohérence des chiffres et la viabilité financière du projet.",
     "choix": [
       "Seulement la banque",
       "Le notaire et le comptable",
@@ -146,6 +157,7 @@
     "id": 12,
     "categorie": "Fondamentaux du plan d'affaires",
     "texte": "Le plan d'affaires est-il utile pour convaincre les fournisseurs ?",
+    "source": "Le plan d'affaires est un outil de persuasion polyvalent. Au-delà des banquiers et investisseurs, d'autres partenaires commerciaux peuvent être rassurés par la solidité de votre dossier, y compris ceux qui vous approvisionnent en matières premières ou marchandises.",
     "choix": [
       "Non, seulement les banques",
       "Oui, il peut convaincre certains fournisseurs",
@@ -159,6 +171,7 @@
     "id": 13,
     "categorie": "Partie rédactionnelle",
     "texte": "Que doit contenir la présentation des porteurs de projet ?",
+    "source": "La partie rédactionnelle commence par une section dédiée aux fondateurs. On y décrit leur vécu professionnel, ce qui les pousse à entreprendre, et les savoir-faire qu'ils apportent au projet. En cas d'association, la complémentarité des profils est mise en avant.",
     "choix": [
       "Seulement le CV",
       "Parcours, motivations et compétences",
@@ -172,6 +185,7 @@
     "id": 14,
     "categorie": "Partie rédactionnelle",
     "texte": "Quel est le principe fondamental concernant le besoin ?",
+    "source": "Avant de lancer un produit ou un service, il faut s'assurer qu'il répond à une demande réelle. Sans cette demande, personne n'achètera, et sans acheteurs, aucun revenu ne sera généré. Cette logique simple est la base de tout projet viable.",
     "choix": [
       "Le besoin n'est pas important",
       "Pas de besoin = pas de clients = pas de rentrées",
@@ -185,6 +199,7 @@
     "id": 15,
     "categorie": "Partie rédactionnelle",
     "texte": "Pourquoi analyser les fournisseurs en détail ?",
+    "source": "Le choix des fournisseurs ne se résume pas aux prix. Leurs délais de livraison, leurs conditions de paiement et leur fiabilité influencent directement la gestion de votre argent disponible, le niveau de vos réserves de marchandises et le fonctionnement quotidien de votre activité.",
     "choix": [
       "Pour négocier les prix uniquement",
       "Impact sur trésorerie, stock et organisation",
@@ -198,6 +213,7 @@
     "id": 16,
     "categorie": "Partie rédactionnelle",
     "texte": "Quel impact ont les conditions de paiement fournisseurs ?",
+    "source": "Un fournisseur qui exige un paiement comptant n'a pas le même effet sur vos finances qu'un fournisseur qui accorde 30 ou 60 jours. Ces délais déterminent à quel moment l'argent sort de votre compte et donc la fluidité de vos liquidités.",
     "choix": [
       "Aucun impact notable",
       "Impact direct sur la gestion de trésorerie",
@@ -211,6 +227,7 @@
     "id": 17,
     "categorie": "Partie rédactionnelle",
     "texte": "Exemple : sandwicherie près d'une école, quelle saisonnalité ?",
+    "source": "Prenons le cas d'une sandwicherie dont 80% de la clientèle est composée d'étudiants. Quand les étudiants partent en vacances d'été ou entrent en période d'examens et de blocus en fin d'année, la fréquentation chute considérablement.",
     "choix": [
       "Pas de saisonnalité",
       "Plus d'affluence en hiver",
@@ -224,6 +241,7 @@
     "id": 18,
     "categorie": "Partie rédactionnelle",
     "texte": "Qu'est-ce qui détermine votre part de marché ?",
+    "source": "Pour estimer quelle portion du marché vous pouvez capter, il faut croiser deux études : d'un côté, identifier et quantifier les personnes susceptibles d'acheter votre produit, et de l'autre, évaluer les acteurs déjà présents sur le même créneau dans votre zone.",
     "choix": [
       "Vos prix uniquement",
       "Analyse clientèle et concurrence",
@@ -237,6 +255,7 @@
     "id": 19,
     "categorie": "Partie rédactionnelle",
     "texte": "Pour un consultant, l'emplacement commercial est-il critique ?",
+    "source": "L'importance de la localisation varie selon la nature de l'activité. Un commerce de détail a besoin de passage, tandis qu'un prestataire de services intellectuels qui se déplace directement dans les locaux de sa clientèle n'a pas cette contrainte.",
     "choix": [
       "Oui, absolument crucial",
       "Non, car il va chez ses clients",
@@ -250,6 +269,7 @@
     "id": 20,
     "categorie": "Partie rédactionnelle",
     "texte": "Que faut-il analyser chez vos clients potentiels ?",
+    "source": "Connaître sa clientèle cible ne se limite pas à savoir où elle habite. Il faut comprendre comment elle achète, ce qu'elle consomme, quel budget elle y consacre et à quelle fréquence elle renouvelle ses achats pour adapter votre offre.",
     "choix": [
       "Seulement leur budget",
       "Habitudes d'achat et de consommation",
@@ -263,6 +283,7 @@
     "id": 21,
     "categorie": "Partie rédactionnelle",
     "texte": "Pourquoi optimiser sa communication est-il crucial ?",
+    "source": "Faire connaître son entreprise demande un investissement en argent et en heures de travail. Connaître précisément son public cible permet de cibler les bons canaux et d'éviter de gaspiller des ressources précieuses sur des actions inefficaces.",
     "choix": [
       "C'est obligatoire par la loi",
       "Communication coûte cher et prend du temps",
@@ -276,6 +297,7 @@
     "id": 22,
     "categorie": "Partie rédactionnelle",
     "texte": "Exemple fournisseur fermé dimanche, quel problème ?",
+    "source": "Imaginez un commerce ouvert six jours sur sept, du lundi au samedi. Si son unique fournisseur ne livre pas le dimanche, cela signifie que le réapprovisionnement doit se faire sur les jours ouvrables, ce qui contraint la planification des jours de repos et l'ensemble du fonctionnement interne.",
     "choix": [
       "Aucun problème particulier",
       "Impact sur organisation et congés",
@@ -289,6 +311,7 @@
     "id": 23,
     "categorie": "Partie rédactionnelle",
     "texte": "Tous les éléments rédactionnels servent à quoi ?",
+    "source": "L'ensemble des analyses qualitatives — étude du marché, des clients, des concurrents, de l'emplacement — converge vers un même objectif : permettre à l'entrepreneur de déterminer quels produits vendre, à quel prix, où s'installer et comment se faire connaître.",
     "choix": [
       "Faire joli dans le dossier",
       "Définir la stratégie commerciale",
@@ -302,6 +325,7 @@
     "id": 24,
     "categorie": "Partie rédactionnelle",
     "texte": "La zone de chalandise dépend de quoi ?",
+    "source": "La zone géographique d'où proviennent vos clients n'est pas la même selon que vous ouvrez une boulangerie ou un cabinet de conseil. Elle varie en fonction du nombre d'acteurs déjà présents sur le territoire et de la nature même du domaine dans lequel vous vous lancez.",
     "choix": [
       "Uniquement de vos moyens financiers",
       "Concurrence et secteur d'activité",
@@ -315,6 +339,7 @@
     "id": 25,
     "categorie": "Introduction au plan financier",
     "texte": "À quoi sert la partie chiffrée en premier lieu ?",
+    "source": "La partie chiffrée du plan d'affaires a pour vocation première de quantifier les ressources financières nécessaires avant même de pouvoir vendre quoi que ce soit. Elle répond à la question : de combien ai-je besoin pour démarrer mon activité ?",
     "choix": [
       "Calculer les impôts",
       "Estimer le montant nécessaire pour lancer",
@@ -328,6 +353,7 @@
     "id": 26,
     "categorie": "Introduction au plan financier",
     "texte": "Combien de tableaux essentiels compose le plan financier ?",
+    "source": "Le plan financier repose sur plusieurs tableaux complémentaires : le premier détaille les investissements et leur financement, le deuxième présente les produits et charges sur l'année, et le dernier ventile ces flux mois par mois pour suivre la trésorerie.",
     "choix": [
       "2 tableaux",
       "3 tableaux",
@@ -341,6 +367,7 @@
     "id": 27,
     "categorie": "Introduction au plan financier",
     "texte": "Que reprend le tableau de financement et d'affectation ?",
+    "source": "Le premier tableau du plan financier dresse l'inventaire complet de ce dont vous avez besoin pour ouvrir vos portes — matériel, aménagements, stock initial — et en face, les moyens financiers que vous mobilisez pour y répondre.",
     "choix": [
       "Seulement les revenus",
       "Besoins et ressources au démarrage",
@@ -354,6 +381,7 @@
     "id": 28,
     "categorie": "Introduction au plan financier",
     "texte": "Le compte de résultat prévisionnel reprend quoi ?",
+    "source": "Ce tableau présente une vision globale de l'activité sur une année complète. D'un côté figurent tous les revenus générés par les ventes (les produits), de l'autre toutes les dépenses nécessaires au fonctionnement (les charges).",
     "choix": [
       "Seulement les investissements",
       "Rentrées et sorties annuelles",
@@ -367,6 +395,7 @@
     "id": 29,
     "categorie": "Introduction au plan financier",
     "texte": "Le tableau de trésorerie, c'est quoi exactement ?",
+    "source": "Là où le compte de résultat donne une vue annuelle, un autre tableau reprend exactement les mêmes informations mais les découpe en périodes de trente jours. Cela permet de voir précisément quand l'argent entre et sort au fil des mois.",
     "choix": [
       "Un résumé du compte de résultat",
       "Le compte de résultat mois par mois",
@@ -380,6 +409,7 @@
     "id": 30,
     "categorie": "Introduction au plan financier",
     "texte": "Le tableau de trésorerie tient compte de quoi de spécial ?",
+    "source": "En plus des revenus et dépenses classiques, le tableau de trésorerie intègre les flux liés à la taxe sur la valeur ajoutée : les montants collectés auprès des clients et ceux payés aux fournisseurs, ainsi que les récupérations trimestrielles.",
     "choix": [
       "Seulement les salaires",
       "Des rentrées/sorties TVA",
@@ -393,6 +423,7 @@
     "id": 31,
     "categorie": "Introduction au plan financier",
     "texte": "Que se passe-t-il si vous faites plus de rentrées que de sorties ?",
+    "source": "En matière de TVA, l'entrepreneur collecte la taxe auprès de ses clients et en paie à ses fournisseurs. Lorsque la TVA collectée dépasse la TVA déductible, la différence constitue une dette envers l'administration fiscale qu'il faut reverser.",
     "choix": [
       "Rien de particulier",
       "Vous récupérez de la TVA",
@@ -406,6 +437,7 @@
     "id": 32,
     "categorie": "Introduction au plan financier",
     "texte": "Pourquoi le tableau de trésorerie est-il crucial ?",
+    "source": "Une entreprise peut être rentable sur le papier et pourtant se retrouver incapable de payer ses factures à un moment donné. Le suivi mensuel des flux permet d'anticiper ces moments critiques où les liquidités risquent de manquer.",
     "choix": [
       "Pour calculer les bénéfices",
       "Pour éviter cessation de paiement",
@@ -419,6 +451,7 @@
     "id": 33,
     "categorie": "Introduction au plan financier",
     "texte": "La partie chiffrée met en musique quoi ?",
+    "source": "Toutes les conclusions tirées de l'étude qualitative — taille du marché, profil des clients, niveau de concurrence — doivent être traduites en chiffres. La partie financière transforme ces constats de terrain en projections concrètes.",
     "choix": [
       "Les obligations légales",
       "Hypothèses de l'analyse de marché",
@@ -432,6 +465,7 @@
     "id": 34,
     "categorie": "Introduction au plan financier",
     "texte": "Le chiffre d'affaires doit permettre de quoi ?",
+    "source": "Les revenus générés par l'activité doivent être suffisants pour faire face à trois catégories de dépenses : les frais de fonctionnement courants, les mensualités des emprunts contractés, et un revenu décent pour que l'entrepreneur puisse vivre.",
     "choix": [
       "Seulement payer les charges",
       "Couvrir charges, crédits et revenus",
@@ -445,6 +479,7 @@
     "id": 35,
     "categorie": "Introduction au plan financier",
     "texte": "Quand récupère-t-on la TVA sur investissements ?",
+    "source": "Lors du lancement, l'entrepreneur paie la TVA sur tous ses investissements initiaux. Cette TVA n'est pas perdue : l'administration la rembourse lors de la première déclaration trimestrielle, soit environ trois mois après le début de l'activité.",
     "choix": [
       "Immédiatement",
       "Au bout du premier trimestre",
@@ -458,6 +493,7 @@
     "id": 36,
     "categorie": "Introduction au plan financier",
     "texte": "Les trois tableaux sont-ils indépendants ?",
+    "source": "Les tableaux du plan financier ne fonctionnent pas en silos. Les investissements du premier alimentent les amortissements du deuxième, et les charges mensuelles du troisième découlent des totaux annuels du deuxième. Chaque modification se répercute partout.",
     "choix": [
       "Oui, complètement séparés",
       "Non, ils sont interconnectés",
@@ -471,6 +507,7 @@
     "id": 37,
     "categorie": "Tableau de financement",
     "texte": "Que comprennent les immobilisations immatérielles ?",
+    "source": "Dans le tableau de financement, certains investissements n'ont pas de forme physique. Il s'agit par exemple du développement d'un logiciel ou d'une application, de l'enregistrement d'une marque auprès des autorités, du dépôt de brevets ou de travaux de recherche.",
     "choix": [
       "Matériel et équipement",
       "Frais création appli, marques, R&D",
@@ -484,6 +521,7 @@
     "id": 38,
     "categorie": "Tableau de financement",
     "texte": "Pour un salon de coiffure, quels immobilisations matérielles ?",
+    "source": "Ouvrir un salon de coiffure nécessite un équipement complet : les installations pour laver les cheveux, le mobilier pour asseoir les clients, un espace d'accueil avec un comptoir, une signalétique extérieure visible, des rangements, et bien sûr tout l'outillage professionnel.",
     "choix": [
       "Seulement les ciseaux",
       "Bacs, sièges, comptoir, enseigne",
@@ -497,6 +535,7 @@
     "id": 39,
     "categorie": "Tableau de financement",
     "texte": "Les immobilisations financières comprennent quoi ?",
+    "source": "Avant de démarrer, certains montants doivent être bloqués à titre de garantie. Pour louer un local commercial, le bailleur exige souvent plusieurs mois de loyer en dépôt. Les banques peuvent aussi demander des garanties. Ces sommes sont immobilisées mais restent récupérables.",
     "choix": [
       "Les emprunts bancaires",
       "Cautions et garanties locatives",
@@ -510,6 +549,7 @@
     "id": 40,
     "categorie": "Tableau de financement",
     "texte": "Règle fondamentale du tableau de financement ?",
+    "source": "Dans le tableau de financement, chaque montant doit inclure la taxe sur la valeur ajoutée. La raison est simple : même si cette taxe sera récupérée plus tard, il faut disposer de l'argent au moment de l'achat pour la payer au fournisseur.",
     "choix": [
       "Montants hors TVA",
       "Montants TVA comprise",
@@ -523,6 +563,7 @@
     "id": 41,
     "categorie": "Tableau de financement",
     "texte": "Principe comptable de base pour ce tableau ?",
+    "source": "Le tableau de financement repose sur un équilibre fondamental en comptabilité. Si le total de vos besoins s'élève à 50 000€, alors le total de vos ressources — apports, emprunts, aides — doit atteindre exactement le même montant.",
     "choix": [
       "Recettes = Dépenses",
       "Actif = Passif",
@@ -536,6 +577,7 @@
     "id": 42,
     "categorie": "Tableau de financement",
     "texte": "Ratio d'apport propre recommandé ?",
+    "source": "Les banques évaluent le sérieux d'un porteur de projet en regardant la part qu'il investit de sa poche. Pour optimiser ses chances d'obtenir un prêt, il est conseillé de couvrir entre un cinquième et un quart du montant total des investissements avec ses propres fonds.",
     "choix": [
       "10-15%",
       "20-25%",
@@ -549,6 +591,7 @@
     "id": 43,
     "categorie": "Tableau de financement",
     "texte": "Pourquoi ne pas mettre tout en apport propre ?",
+    "source": "Même si vous disposez de l'intégralité des fonds nécessaires, il est prudent de ne pas tout investir dans l'entreprise. La vie réserve des imprévus — une réparation de véhicule, un remplacement de chaudière — et il vaut mieux conserver une réserve personnelle.",
     "choix": [
       "C'est interdit par la loi",
       "Garder économies pour coups durs",
@@ -562,6 +605,7 @@
     "id": 44,
     "categorie": "Tableau de financement",
     "texte": "Emprunts long terme financent quoi ?",
+    "source": "En règle générale, la durée d'un emprunt est alignée sur la durée de vie de ce qu'il finance. Les biens durables — rénovations, équipements lourds, aménagements de locaux, acquisition de bâtiments — justifient un crédit étalé sur plusieurs années.",
     "choix": [
       "Stock et trésorerie",
       "Travaux, matériel, mobilier",
@@ -575,6 +619,7 @@
     "id": 45,
     "categorie": "Tableau de financement",
     "texte": "Pour emprunts court terme, quelle attitude des banques ?",
+    "source": "Financer du stock ou de la trésorerie par un crédit bancaire est plus délicat. Les établissements financiers considèrent ces besoins comme plus risqués et sont réticents à les couvrir. Quand ils acceptent, les conditions sont moins favorables qu'un prêt classique à long terme.",
     "choix": [
       "Elles adorent ça",
       "Elles n'aiment pas trop",
@@ -588,6 +633,7 @@
     "id": 46,
     "categorie": "Tableau de financement",
     "texte": "Pourquoi la TVA doit-elle être préfinancée ?",
+    "source": "La TVA payée sur les achats et investissements est récupérable auprès de l'administration fiscale, mais uniquement après la clôture du trimestre. Pendant ce laps de temps, l'entrepreneur doit avancer cet argent de sa poche avant de le récupérer.",
     "choix": [
       "C'est obligatoire par l'État",
       "Elle est payée avant récupération",
@@ -601,6 +647,7 @@
     "id": 47,
     "categorie": "Tableau de financement",
     "texte": "Stock variable selon quel type d'activité ?",
+    "source": "Le besoin en stock varie fortement d'un secteur à l'autre. Un prestataire de services n'a quasiment rien à stocker. Un commerce alimentaire fonctionne en flux tendu avec des rotations rapides. Un commerce de détail non alimentaire doit constituer un stock initial conséquent.",
     "choix": [
       "Toutes activités = même stock",
       "Services=peu, commerce=plus",
@@ -614,6 +661,7 @@
     "id": 48,
     "categorie": "Tableau de financement",
     "texte": "La trésorerie de démarrage sert à quoi ?",
+    "source": "Au lancement d'une activité, les premières factures à payer (loyer, énergie, assurances) arrivent bien avant les premiers encaissements clients. Il faut donc prévoir une somme disponible sur le compte en banque dès le premier jour pour couvrir ces dépenses initiales.",
     "choix": [
       "Faire des bénéfices",
       "Assurer les premières charges",
@@ -627,6 +675,7 @@
     "id": 49,
     "categorie": "Compte de résultat",
     "texte": "Sources données pour estimer le chiffre d'affaires ?",
+    "source": "Pour construire des prévisions de ventes réalistes, plusieurs outils sont à disposition. Le portail statistique wallon donne accès aux données de population et de revenus. Le site du gouvernement publie les budgets moyens des ménages. Enfin, vos fournisseurs potentiels peuvent partager des données sectorielles.",
     "choix": [
       "Seulement votre intuition",
       "WALSTAT, gouvernement, fournisseurs",
@@ -640,6 +689,7 @@
     "id": 50,
     "categorie": "Compte de résultat",
     "texte": "Exemple échec : commerce avec bon CA mais achats où ?",
+    "source": "Un cas réel illustre l'importance de la marge : un commerçant réalisait un excellent chiffre d'affaires mais s'approvisionnait dans des grandes surfaces de distribution comme les enseignes discount. La différence entre son prix de vente et son prix d'achat était trop faible pour dégager un revenu suffisant.",
     "choix": [
       "Chez des grossistes spécialisés",
       "Directement chez le producteur",
@@ -653,6 +703,7 @@
     "id": 51,
     "categorie": "Compte de résultat",
     "texte": "Différence principale personne physique vs société ?",
+    "source": "Le compte de résultat diffère selon la forme juridique choisie. En société, le patrimoine de l'entreprise est séparé de celui du dirigeant : ses biens personnels sont protégés. Ce n'est pas le cas lorsqu'on exerce en nom propre, où tout se confond.",
     "choix": [
       "Le montant des impôts",
       "Distinction biens privés/professionnels",
@@ -666,6 +717,7 @@
     "id": 52,
     "categorie": "Compte de résultat",
     "texte": "Ligne spécifique au compte de résultat société ?",
+    "source": "En personne physique, le bénéfice constitue directement le revenu de l'entrepreneur. En société, le dirigeant se verse un salaire qui apparaît comme une charge dans le compte de résultat. Cette ligne de dépense est absente du compte de résultat d'un indépendant en nom propre.",
     "choix": [
       "Chiffre d'affaires",
       "Rémunération du gérant",
@@ -679,6 +731,7 @@
     "id": 53,
     "categorie": "Compte de résultat",
     "texte": "Cotisations sociales minimum à titre principal ?",
+    "source": "Tout indépendant à titre principal doit verser des cotisations sociales trimestrielles calculées sur un revenu forfaitaire de départ de 14 000€ par an. Le montant minimum trimestriel qui en résulte s'élève à sept cent quarante-huit euros.",
     "choix": [
       "500€ par trimestre",
       "748€ par trimestre",
@@ -692,6 +745,7 @@
     "id": 54,
     "categorie": "Compte de résultat",
     "texte": "À titre complémentaire, cotisations minimum ?",
+    "source": "Les indépendants exerçant à titre complémentaire bénéficient d'un régime allégé. Pour un revenu annuel de référence de 1 500€, les cotisations trimestrielles minimales sont nettement plus basses que celles d'un indépendant principal : quatre-vingt-trois euros par trimestre.",
     "choix": [
       "748€ par trimestre",
       "500€ par trimestre",
@@ -705,6 +759,7 @@
     "id": 55,
     "categorie": "Compte de résultat",
     "texte": "Impôt des personnes physiques : taux ?",
+    "source": "En Belgique, l'impôt des personnes physiques fonctionne par tranches progressives. Les premiers revenus sont taxés au taux le plus bas, et chaque tranche supplémentaire est soumise à un taux plus élevé, allant du quart de vos revenus jusqu'à la moitié pour les tranches les plus hautes.",
     "choix": [
       "Taux fixe 25%",
       "Entre 25 et 50% selon tranches",
@@ -718,6 +773,7 @@
     "id": 56,
     "categorie": "Compte de résultat",
     "texte": "Impôt des sociétés : taux actuel ?",
+    "source": "Suite aux réformes fiscales récentes, le taux normal de l'impôt des sociétés en Belgique a été abaissé à un quart des bénéfices. Sous certaines conditions de taille et de rémunération du dirigeant, un taux réduit de vingt pour cent peut s'appliquer sur la première tranche.",
     "choix": [
       "30%",
       "25%",
@@ -731,6 +787,7 @@
     "id": 57,
     "categorie": "Compte de résultat",
     "texte": "Charges variables : définition ?",
+    "source": "Dans un compte de résultat, certaines dépenses augmentent ou diminuent en proportion directe de l'activité. Plus vous vendez, plus vous consommez de matières premières, d'eau, d'emballages. Si l'activité ralentit, ces postes de dépenses diminuent automatiquement.",
     "choix": [
       "Qui changent selon la saison",
       "Qui varient avec le volume d'activité",
@@ -744,6 +801,7 @@
     "id": 58,
     "categorie": "Compte de résultat",
     "texte": "Exemple charge fixe ?",
+    "source": "Certaines dépenses restent identiques quel que soit le niveau d'activité de l'entreprise. Que vous réalisiez un chiffre d'affaires élevé ou nul, le montant mensuel que vous versez au propriétaire de votre local commercial ne change pas.",
     "choix": [
       "Stock de marchandises",
       "Loyer du local",
@@ -757,6 +815,7 @@
     "id": 59,
     "categorie": "Compte de résultat",
     "texte": "Règle TVA pour compte de résultat ?",
+    "source": "Attention à ne pas confondre les deux tableaux : là où le tableau de financement inclut la TVA dans chaque montant, le compte de résultat adopte la convention inverse. Tous les produits et toutes les charges y figurent sans la taxe sur la valeur ajoutée.",
     "choix": [
       "TVA comprise",
       "Hors TVA",
@@ -770,6 +829,7 @@
     "id": 60,
     "categorie": "Compte de résultat",
     "texte": "Contact pour infos engagement personnel ?",
+    "source": "Si vous envisagez d'engager du personnel, il est important de connaître les barèmes salariaux et les commissions paritaires applicables à votre secteur. Un service spécialisé peut vous renseigner : il s'agit du département « j'engage » de l'organisme ACM, joignable par courrier électronique.",
     "choix": [
       "FOREM directement",
       "j.engage@acm.be",
@@ -783,6 +843,7 @@
     "id": 61,
     "categorie": "Tableau de trésorerie",
     "texte": "Pourquoi le tableau trésorerie est-il le plus important ?",
+    "source": "Parmi les trois tableaux du plan financier, un seul vous accompagne véritablement au jour le jour dans la gestion de votre entreprise. C'est celui que vous consultez régulièrement pour prendre des décisions opérationnelles et ajuster votre cap.",
     "choix": [
       "Pour calculer les impôts",
       "Outil de pilotage quotidien opérationnel",
@@ -796,6 +857,7 @@
     "id": 62,
     "categorie": "Tableau de trésorerie",
     "texte": "Principale cause des faillites précoces ?",
+    "source": "Beaucoup de jeunes entreprises échouent non pas à cause d'un mauvais produit, mais parce que l'entrepreneur ne consulte ses chiffres qu'une fois par an lors du rendez-vous comptable. Ce manque de vigilance permanente empêche de détecter les problèmes à temps.",
     "choix": [
       "Mauvais produits",
       "Pas de suivi régulier des chiffres",
@@ -809,6 +871,7 @@
     "id": 63,
     "categorie": "Tableau de trésorerie",
     "texte": "À quelle fréquence faire le point selon le cours ?",
+    "source": "Un entrepreneur rigoureux ne se contente pas d'un bilan annuel. Il prend le temps de vérifier ses rentrées et ses sorties d'argent à intervalles réguliers, idéalement à chaque fin de période de trente jours, pour détecter les écarts au plus tôt.",
     "choix": [
       "Une fois par an",
       "Mois par mois",
@@ -822,6 +885,7 @@
     "id": 64,
     "categorie": "Tableau de trésorerie",
     "texte": "Solde début janvier : 10 000€. Entrées : 4 000€. Sorties : 11 500€. Solde fin ?",
+    "source": "Le calcul de la trésorerie en fin de mois est simple : on part du solde disponible au début de la période, on y ajoute toutes les entrées d'argent et on soustrait toutes les sorties. Le résultat donne le solde disponible pour le mois suivant.",
     "choix": [
       "22 500€",
       "2 500€",
@@ -835,6 +899,7 @@
     "id": 65,
     "categorie": "Tableau de trésorerie",
     "texte": "Si solde fin mars = -1 200€, que faire ?",
+    "source": "Quand le tableau de trésorerie affiche un solde négatif en fin de mois, cela signifie que l'entreprise ne peut plus payer ses factures. Le problème ne date pas de ce mois-là : il aurait fallu réagir dès le mois précédent quand les signes avant-coureurs étaient visibles.",
     "choix": [
       "Attendre le mois suivant",
       "C'est déjà trop tard, actions urgences",
@@ -848,6 +913,7 @@
     "id": 66,
     "categorie": "Tableau de trésorerie",
     "texte": "Actions possibles en zone orange ?",
+    "source": "Quand les chiffres montrent un ralentissement sans être encore critiques, il faut passer à l'action immédiatement. Cela peut signifier renforcer sa visibilité, reprendre contact avec des prospects qui n'ont pas donné suite, ou relancer des clients qui ont reçu un devis mais n'ont pas confirmé.",
     "choix": [
       "Ne rien faire",
       "Communication, relances, rappels clients",
@@ -861,6 +927,7 @@
     "id": 67,
     "categorie": "Tableau de trésorerie",
     "texte": "Zone verte signifie quoi ?",
+    "source": "Dans le système de suivi par couleurs, le vert est le signal le plus positif. Il indique que les résultats atteignent ou dépassent les prévisions initiales. L'entrepreneur peut envisager sereinement de réinvestir pour faire croître son activité.",
     "choix": [
       "Problème grave",
       "Objectifs atteints ou dépassés",
@@ -874,6 +941,7 @@
     "id": 68,
     "categorie": "Tableau de trésorerie",
     "texte": "Quand agir si problème prévu en mars ?",
+    "source": "L'un des grands avantages du suivi mensuel est la capacité d'anticipation. Si en consultant vos chiffres de février vous constatez une tendance baissière qui mènera à des difficultés le mois suivant, c'est maintenant qu'il faut agir, pas quand la situation sera critique.",
     "choix": [
       "En mars quand c'est critique",
       "Dès février en voyant la tendance",
@@ -887,6 +955,7 @@
     "id": 69,
     "categorie": "Tableau de trésorerie",
     "texte": "Grappiller signifie quoi dans ce contexte ?",
+    "source": "En période de tension financière, chaque euro compte. L'idée est d'aller chercher de petites sommes par-ci par-là : rappeler un client qui a un devis en attente, demander un acompte sur une commande en cours, accélérer l'encaissement de factures existantes.",
     "choix": [
       "Voler des clients",
       "Chercher petites rentrées supplémentaires",
@@ -900,6 +969,7 @@
     "id": 70,
     "categorie": "Tableau de trésorerie",
     "texte": "Le tableau trésorerie révèle quoi que d'autres cachent ?",
+    "source": "Un compte de résultat annuel peut afficher un bénéfice alors que l'entreprise traverse des mois critiques. Seul le suivi mensuel de la trésorerie met en lumière les moments où les liquidités manquent, des périodes de fragilité que les vues globales ne montrent pas.",
     "choix": [
       "Les erreurs comptables",
       "Les tensions de liquidité",
@@ -913,6 +983,7 @@
     "id": 71,
     "categorie": "Tableau de trésorerie",
     "texte": "Que faire si surchargé de boulot et trésorerie baisse ?",
+    "source": "Paradoxalement, certains entrepreneurs débordés de travail voient leur trésorerie baisser. La raison : trop occupés, ils ne prennent plus le temps de suivre les propositions commerciales envoyées. Des devis restent sans suite alors que certains clients auraient dit oui si on les avait simplement recontactés.",
     "choix": [
       "Refuser tout nouveau client",
       "Rappeler clients pour devis oubliés",
@@ -926,6 +997,7 @@
     "id": 72,
     "categorie": "Tableau de trésorerie",
     "texte": "Le tableau trésorerie est votre quoi ?",
+    "source": "Pour un entrepreneur, ce tableau joue le rôle d'un système d'alerte permanent. Comme un instrument de navigation qui détecte les obstacles avant qu'il ne soit trop tard, il permet de repérer les dangers financiers et de prendre les mesures nécessaires pour la pérennité de l'entreprise.",
     "choix": [
       "Obligation comptable",
       "Radar de survie entrepreneuriale",
@@ -939,6 +1011,7 @@
     "id": 73,
     "categorie": "Aides et primes",
     "texte": "Montant du plan Airbag ?",
+    "source": "Le plan Airbag est un dispositif de soutien financier sous forme de subside pour les créateurs d'entreprise en Wallonie. Le montant octroyé est de deux mille cinq cents euros, versé en deux tranches distinctes après instruction du dossier.",
     "choix": [
       "1 500€",
       "2 500€",
@@ -952,6 +1025,7 @@
     "id": 74,
     "categorie": "Aides et primes",
     "texte": "Délai pour instruction dossier Airbag ?",
+    "source": "L'un des inconvénients majeurs du plan Airbag est sa lenteur administrative. Entre le dépôt du dossier et la décision, il faut compter près d'un semestre complet. Ensuite, quatre mois supplémentaires sont nécessaires avant de recevoir la première tranche.",
     "choix": [
       "2-3 mois",
       "5-6 mois",
@@ -965,6 +1039,7 @@
     "id": 75,
     "categorie": "Aides et primes",
     "texte": "Condition âge alternative pour Airbag ?",
+    "source": "Pour bénéficier du plan Airbag, plusieurs conditions alternatives existent. L'une d'elles concerne l'âge du demandeur : les personnes ayant dépassé le demi-siècle peuvent y prétendre, même sans remplir les autres critères habituels comme le diplôme.",
     "choix": [
       "Plus de 40 ans",
       "Plus de 50 ans",
@@ -978,6 +1053,7 @@
     "id": 76,
     "categorie": "Aides et primes",
     "texte": "Prime à l'investissement : taux maximum ?",
+    "source": "La Région wallonne propose une prime qui prend en charge une partie du coût total de vos investissements. Le pourcentage accordé dépend de la taille de l'entreprise et de la zone géographique, mais ne peut pas dépasser dix-huit pour cent du montant investi.",
     "choix": [
       "15%",
       "18%",
@@ -991,6 +1067,7 @@
     "id": 77,
     "categorie": "Aides et primes",
     "texte": "\"Créer un Choc\" vise quoi ?",
+    "source": "Face au déclin commercial des cœurs de ville, la Région wallonne a lancé un dispositif d'aide spécifique. L'objectif est d'encourager l'installation de nouvelles activités dans les rues commerçantes pour ramener du dynamisme et de l'attractivité dans les centres urbains.",
     "choix": [
       "Les zones industrielles",
       "La redynamisation des centres-villes",
@@ -1004,6 +1081,7 @@
     "id": 78,
     "categorie": "Aides et primes",
     "texte": "Montant maximum \"Créer un Choc\" ?",
+    "source": "Le dispositif « Créer un Choc » couvre une partie des frais d'aménagement de votre commerce en centre-ville. La prise en charge est plafonnée à six mille euros et ne peut représenter plus de soixante pour cent des dépenses éligibles.",
     "choix": [
       "4 000€",
       "6 000€",
@@ -1017,6 +1095,7 @@
     "id": 79,
     "categorie": "Aides et primes",
     "texte": "\"Créer un Choc\" couvre quel % maximum ?",
+    "source": "L'aide « Créer un Choc » ne finance pas la totalité de vos travaux d'aménagement. Le dispositif impose que l'entrepreneur prenne en charge au minimum quarante pour cent des dépenses, le solde étant couvert par la prime régionale.",
     "choix": [
       "50%",
       "60%",
@@ -1030,6 +1109,7 @@
     "id": 80,
     "categorie": "Aides et primes",
     "texte": "Chèques entreprises servent à quoi ?",
+    "source": "Les chèques entreprises sont un mécanisme wallon qui réduit le coût de l'accompagnement professionnel. Ils permettent aux entrepreneurs de faire appel à des experts ou des structures agréées pour du conseil, du coaching ou de la formation, à un tarif préférentiel.",
     "choix": [
       "Acheter du matériel",
       "Payer accompagnement par consultants",
@@ -1043,6 +1123,7 @@
     "id": 81,
     "categorie": "Aides et primes",
     "texte": "Airbag : que touchez-vous au bout de 10 mois ?",
+    "source": "Le versement du plan Airbag se fait en deux tranches égales. Avec six mois d'instruction puis quatre mois d'attente supplémentaires, ce n'est qu'au bout de dix mois que vous recevez la première moitié du subside total de 2 500€.",
     "choix": [
       "Les 2 500€ complets",
       "1 250€ seulement",
@@ -1056,6 +1137,7 @@
     "id": 82,
     "categorie": "Aides et primes",
     "texte": "Condition diplôme pour Airbag ?",
+    "source": "Parmi les critères d'éligibilité au plan Airbag, il y a une condition liée à la formation. Le candidat doit posséder soit un diplôme délivré par l'institut de formation des classes moyennes, soit un diplôme universitaire ou de type long orienté vers les sciences économiques.",
     "choix": [
       "N'importe quel diplôme",
       "Diplôme IFAPME ou supérieur économie",
@@ -1069,6 +1151,7 @@
     "id": 83,
     "categorie": "Aides et primes",
     "texte": "Site pour infos \"Créer un Choc\" ?",
+    "source": "Toutes les informations pratiques sur le dispositif « Créer un Choc » — conditions, formulaires, liste des villes et des rues éligibles — sont centralisées sur un portail web dédié à la création d'entreprise en Wallonie dont l'adresse se termine par .be.",
     "choix": [
       "airbag.be",
       "creation.be",
@@ -1082,6 +1165,7 @@
     "id": 84,
     "categorie": "Aides et primes",
     "texte": "Pourquoi Airbag appelé \"poire pour la soif\" ?",
+    "source": "Le plan Airbag est souvent critiqué pour ses délais administratifs. Entre le dépôt du dossier et le premier versement, il s'écoule près de dix mois. Pour un entrepreneur qui avait besoin de cet argent au moment du lancement, cette aide arrive bien après la période critique.",
     "choix": [
       "C'est peu d'argent",
       "Délais très longs avant paiement",
@@ -1095,6 +1179,7 @@
     "id": 85,
     "categorie": "Aides et prêts",
     "texte": "Source du financement \"Prêt Coup de Pouce\" ?",
+    "source": "Le prêt Coup de Pouce est un mécanisme original qui ne fait pas appel aux circuits bancaires traditionnels. Il repose sur la mobilisation de l'épargne de personnes privées — famille, amis ou simples citoyens — qui prêtent directement à l'entrepreneur.",
     "choix": [
       "Banques traditionnelles",
       "Épargne privée de particuliers",
@@ -1108,6 +1193,7 @@
     "id": 86,
     "categorie": "Aides et prêts",
     "texte": "Montant maximum empruntable \"Coup de Pouce\" ?",
+    "source": "Le prêt Coup de Pouce fixe des plafonds distincts pour l'emprunteur et le prêteur. Côté entrepreneur, le total cumulé de tous les prêts reçus via ce dispositif ne peut pas dépasser un quart de million d'euros.",
     "choix": [
       "100 000€",
       "200 000€",
@@ -1121,6 +1207,7 @@
     "id": 87,
     "categorie": "Aides et prêts",
     "texte": "Montant maximum par prêteur \"Coup de Pouce\" ?",
+    "source": "Pour protéger les particuliers qui prêtent leur épargne via le dispositif Coup de Pouce, un plafond individuel a été fixé. Chaque prêteur ne peut engager plus de cent mille euros au total dans ce type de prêts.",
     "choix": [
       "50 000€",
       "100 000€",
@@ -1134,6 +1221,7 @@
     "id": 88,
     "categorie": "Aides et prêts",
     "texte": "Taux intérêt \"Coup de Pouce\" approximatif ?",
+    "source": "L'un des avantages du prêt Coup de Pouce est son coût très faible pour l'entrepreneur. Les taux pratiqués sont nettement inférieurs à ceux du marché bancaire, oscillant généralement entre zéro virgule huit et un virgule sept pour cent.",
     "choix": [
       "0,5 à 1%",
       "0,8 à 1,7%",
@@ -1147,6 +1235,7 @@
     "id": 89,
     "categorie": "Aides et prêts",
     "texte": "Crédit d'impôt prêteur premières 4 années ?",
+    "source": "Pour inciter les particuliers à prêter via le Coup de Pouce, un avantage fiscal leur est accordé. Pendant les quatre premières années du prêt, le prêteur bénéficie d'une réduction d'impôt correspondant à quatre pour cent du capital prêté.",
     "choix": [
       "2%",
       "4%",
@@ -1160,6 +1249,7 @@
     "id": 90,
     "categorie": "Aides et prêts",
     "texte": "SOFINEX : garantie jusqu'à quel pourcentage ?",
+    "source": "La SOFINEX propose un mécanisme de garantie publique pour faciliter l'accès au crédit bancaire. La Région wallonne peut se porter garante d'une partie significative du prêt accordé par la banque, jusqu'à trois quarts du montant emprunté.",
     "choix": [
       "50%",
       "75%",
@@ -1173,6 +1263,7 @@
     "id": 91,
     "categorie": "Aides et prêts",
     "texte": "SOFINEX cofinancement : limite région ?",
+    "source": "Dans le cadre du cofinancement SOFINEX, la Région wallonne prête directement aux côtés de la banque. Toutefois, sa participation est plafonnée : elle ne peut pas financer plus de quarante pour cent du montant total du projet.",
     "choix": [
       "30%",
       "40%",
@@ -1186,6 +1277,7 @@
     "id": 92,
     "categorie": "Aides et prêts",
     "texte": "Condition SOFINEX : si banque prête 30%, région prête ?",
+    "source": "Le cofinancement SOFINEX repose sur un principe de symétrie : la Région wallonne ne s'engage jamais au-delà de ce que fait la banque. Si l'établissement bancaire consent à financer trente pour cent du projet, la participation régionale est plafonnée au même niveau.",
     "choix": [
       "Toujours 40%",
       "Maximum 30% aussi",
@@ -1199,6 +1291,7 @@
     "id": 93,
     "categorie": "Aides et prêts",
     "texte": "Taux région wallonne SOFINEX approximatif ?",
+    "source": "L'un des attraits de la SOFINEX est le coût du financement régional. Le taux appliqué par la Région wallonne est très compétitif, situé autour de un virgule vingt-cinq pour cent, bien en dessous des taux bancaires classiques.",
     "choix": [
       "1,25%",
       "1,75%",
@@ -1212,6 +1305,7 @@
     "id": 94,
     "categorie": "Aides et prêts",
     "texte": "Produit mixte automatique : montant maximum ?",
+    "source": "Le produit mixte automatique combine prêt bancaire et financement régional de manière simplifiée. Ce dispositif est accessible sans démarches complexes mais est limité en montant : il ne peut pas dépasser soixante-quinze mille euros au total.",
     "choix": [
       "50 000€",
       "75 000€",
@@ -1225,6 +1319,7 @@
     "id": 95,
     "categorie": "Aides et prêts",
     "texte": "Credal : montant maximum ?",
+    "source": "Credal est une coopérative de crédit alternatif qui finance des projets à dimension sociale ou environnementale. Pour les entrepreneurs dont le projet intègre une composante de développement durable, Credal peut accorder un prêt allant jusqu'à vingt-cinq mille euros.",
     "choix": [
       "15 000€",
       "25 000€",
@@ -1238,6 +1333,7 @@
     "id": 96,
     "categorie": "Aides et prêts",
     "texte": "Exemple bière crowdfunding : montant récolté ?",
+    "source": "Le crowdfunding est une alternative de financement participatif. Un exemple concret : de jeunes entrepreneurs souhaitant lancer leur propre marque de bière ont fait appel à la communauté en ligne et ont réussi à récolter dix mille euros pour concrétiser leur projet.",
     "choix": [
       "5 000€",
       "10 000€",
