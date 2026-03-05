@@ -90,6 +90,7 @@ export default function MultiPlayPage() {
   const [canAnswer, setCanAnswer] = useState(false)
   const [countdown, setCountdown] = useState(0)
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const [hasAnswered, setHasAnswered] = useState(false)
 
   // ResizeObserver
   useEffect(() => {
@@ -142,8 +143,17 @@ export default function MultiPlayPage() {
         setTimer((t) => {
           if (t <= 1) {
             if (timerRef.current) clearInterval(timerRef.current)
+            // Clear currentQuestionId on server so next threshold can trigger
+            if (salleId) {
+              fetch('/api/multi/question-reset', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ salleId }),
+              })
+            }
             multi.resetQuestion()
             pausedRef.current = false
+            setHasAnswered(false)
             return 30
           }
           return t - 1
@@ -153,6 +163,7 @@ export default function MultiPlayPage() {
       pausedRef.current = false
       setCanAnswer(false)
       setCountdown(0)
+      setHasAnswered(false)
       if (timerRef.current) {
         clearInterval(timerRef.current)
         timerRef.current = null
@@ -353,7 +364,8 @@ export default function MultiPlayPage() {
   }, [lockAndProceed])
 
   async function handleRepondre(index: number) {
-    if (!salleId || !multi.question) return
+    if (!salleId || !multi.question || hasAnswered) return
+    setHasAnswered(true)
     await fetch('/api/multi/repondre', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -413,9 +425,9 @@ export default function MultiPlayPage() {
       {multi.question && (
         <QuestionMulti
           question={multi.question}
-          canAnswer={canAnswer}
+          canAnswer={canAnswer && !hasAnswered}
           countdown={countdown}
-          joueurBloque={multi.joueurBloque}
+          reponses={multi.reponses}
           explication={multi.explication}
           onRepondre={handleRepondre}
           timerSeconds={timer}

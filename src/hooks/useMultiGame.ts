@@ -17,12 +17,20 @@ interface ScoreEntry {
   score: number
 }
 
+interface ReponseJoueur {
+  joueurNom: string
+  joueurId: string
+  correct: boolean
+  points: number
+  explication: string | null
+}
+
 interface MultiGameState {
   joueurs: string[]
   started: boolean
   question: QuestionMultiData | null
   triggeredByUserId: string | null
-  joueurBloque: string | null
+  reponses: ReponseJoueur[]
   explication: string | null
   scores: ScoreEntry[]
   pusherReady: boolean
@@ -34,7 +42,7 @@ export function useMultiGame(salleId: string) {
     started: false,
     question: null,
     triggeredByUserId: null,
-    joueurBloque: null,
+    reponses: [],
     explication: null,
     scores: [],
     pusherReady: false,
@@ -45,7 +53,7 @@ export function useMultiGame(salleId: string) {
       ...s,
       question: null,
       triggeredByUserId: null,
-      joueurBloque: null,
+      reponses: [],
       explication: null,
     }))
   }, [])
@@ -76,26 +84,23 @@ export function useMultiGame(salleId: string) {
         ...s,
         question: data,
         triggeredByUserId: data.triggeredByUserId,
-        joueurBloque: null,
+        reponses: [],
         explication: null,
       }))
     })
 
-    channel.bind('reponse-correcte', (data: { joueurNom: string; explication: string | null; scores: ScoreEntry[]; points: number }) => {
+    channel.bind('reponse-joueur', (data: ReponseJoueur & { scores: ScoreEntry[] }) => {
       setState((s) => ({
         ...s,
-        explication: data.explication,
+        reponses: [...s.reponses, {
+          joueurNom: data.joueurNom,
+          joueurId: data.joueurId,
+          correct: data.correct,
+          points: data.points,
+          explication: data.explication,
+        }],
+        explication: data.explication ?? s.explication,
         scores: data.scores,
-      }))
-      setTimeout(() => {
-        resetQuestion()
-      }, 2000)
-    })
-
-    channel.bind('reponse-incorrecte', (data: { joueurNom: string }) => {
-      setState((s) => ({
-        ...s,
-        joueurBloque: data.joueurNom,
       }))
     })
 

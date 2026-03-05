@@ -8,11 +8,19 @@ interface QuestionData {
   choix: string[]
 }
 
+interface ReponseJoueur {
+  joueurNom: string
+  joueurId: string
+  correct: boolean
+  points: number
+  explication: string | null
+}
+
 interface Props {
   question: QuestionData
   canAnswer: boolean
   countdown: number
-  joueurBloque: string | null
+  reponses: ReponseJoueur[]
   explication: string | null
   onRepondre: (index: number) => void
   timerSeconds: number
@@ -22,7 +30,7 @@ export function QuestionMulti({
   question,
   canAnswer,
   countdown,
-  joueurBloque,
+  reponses,
   explication,
   onRepondre,
   timerSeconds,
@@ -54,13 +62,13 @@ export function QuestionMulti({
         </p>
 
         {/* Countdown before answers unlock */}
-        {!canAnswer && selected === null && (
+        {!canAnswer && selected === null && countdown > 0 && (
           <p className="mb-3 text-center text-sm font-semibold text-yellow-400">
             Reponses disponibles dans {countdown}s...
           </p>
         )}
 
-        {/* Answer choices — visible to all, disabled during countdown */}
+        {/* Answer choices — visible to all, disabled during countdown or after answering */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {question.choix.map((choix, i) => (
             <button
@@ -85,12 +93,18 @@ export function QuestionMulti({
           ))}
         </div>
 
-        {/* Wrong answer notification */}
-        {joueurBloque && (
-          <p className="mt-3 text-center text-sm text-orange-400">{joueurBloque} s&apos;est trompe !</p>
+        {/* Player responses feed */}
+        {reponses.length > 0 && (
+          <div className="mt-3 space-y-1">
+            {reponses.map((r, i) => (
+              <p key={i} className={`text-sm ${r.correct ? 'text-green-400' : 'text-orange-400'}`}>
+                {r.joueurNom} {r.correct ? `a trouve ! (+${r.points} pts)` : 's\'est trompe !'}
+              </p>
+            ))}
+          </div>
         )}
 
-        {/* Explication after correct answer */}
+        {/* Explication after a correct answer */}
         {explication && (
           <div className="mt-4 rounded-lg border border-green-500/20 bg-green-500/10 px-4 py-3 text-sm text-green-300">
             <span className="font-semibold">Bonne reponse ! </span>

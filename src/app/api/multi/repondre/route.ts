@@ -47,48 +47,40 @@ export async function POST(req: Request) {
 
   const joueurNom = user?.nom ?? 'Joueur'
 
-  if (reponseIndex === question.bonneReponse) {
-    // Calculate time-based points
-    const tempsMs = salle?.questionStartedAt
-      ? Date.now() - salle.questionStartedAt.getTime()
-      : 10000
-    const points = calculerPointsReponse(true, tempsMs)
+  const correct = reponseIndex === question.bonneReponse
+  const tempsMs = salle?.questionStartedAt
+    ? Date.now() - salle.questionStartedAt.getTime()
+    : 10000
+  const points = correct ? calculerPointsReponse(true, tempsMs) : 0
 
+  if (correct) {
     await prisma.salleJoueur.updateMany({
       where: { salleId, userId },
       data: { score: { increment: points } },
     })
-
-    // Reset question state
-    await prisma.salle.update({
-      where: { id: salleId },
-      data: { joueurQuiRepond: null, currentQuestionId: null, questionStartedAt: null },
-    })
-
-    const scores = await prisma.salleJoueur.findMany({
-      where: { salleId },
-      include: { user: { select: { nom: true } } },
-      orderBy: { score: 'desc' },
-    })
-
-    await pusherServer.trigger(`salle-${salleId}`, 'reponse-correcte', {
-      joueurNom,
-      explication: question.explication,
-      points,
-      scores: scores.map((s) => ({
-        joueurNom: s.user.nom,
-        joueurId: s.userId,
-        score: s.score,
-      })),
-    })
-
-    return NextResponse.json({ correct: true, points })
-  } else {
-    // Wrong answer — broadcast but don't block others from answering
-    await pusherServer.trigger(`salle-${salleId}`, 'reponse-incorrecte', {
-      joueurNom,
-    })
-
-    return NextResponse.json({ correct: false })
   }
+
+  // Don't clear currentQuestionId — let the timer handle the reset
+  // so all players get a chance to answer
+
+  const scores = await prisma.salleJoueur.findMany({
+    where: { salleId },
+    include: { user: { select: { nom: true } } },
+    orderBy: { score: 'desc' },
+  })
+
+  await pusherServer.trigger(`salle-${salleId}`, 'reponse-joueur', {
+    joueurNom,
+    joueurId: userId,
+    correct,
+    points,
+    explication: correct ? question.explication : null,
+    scores: scores.map((s) => ({
+      joueurNom: s.user.nom,
+      joueurId: s.userId,
+      score: s.score,
+    })),
+  })
+
+  return NextResponse.json({ correct, points })
 }
