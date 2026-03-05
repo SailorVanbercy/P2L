@@ -79,9 +79,11 @@ export default function MultiPlayPage() {
   const rafRef = useRef<number>(0)
   const lastTickRef = useRef(0)
   const pausedRef = useRef(false)
+  const gameOverRef = useRef(false)
 
   const [score, setScore] = useState(0)
   const [blocsPlaces, setBlocsPlaces] = useState(0)
+  const [gameOver, setGameOver] = useState(false)
   const [isBloque, setIsBloque] = useState(false)
   const [timer, setTimer] = useState(30)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -205,7 +207,17 @@ export default function MultiPlayPage() {
     nextRef.current = randomPiece()
 
     if (isGameOver(clearedBoard, currentRef.current)) {
+      gameOverRef.current = true
+      setGameOver(true)
       cancelAnimationFrame(rafRef.current)
+      // Save score
+      if (salleId) {
+        fetch('/api/multi/scores', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ salleId, score: scoreRef.current }),
+        })
+      }
       return
     }
 
@@ -221,6 +233,8 @@ export default function MultiPlayPage() {
 
   const tick = useCallback(
     (timestamp: number) => {
+      if (gameOverRef.current) return
+
       if (pausedRef.current) {
         draw()
         rafRef.current = requestAnimationFrame(tick)
@@ -354,6 +368,18 @@ export default function MultiPlayPage() {
             className="rounded-xl border border-white/10 shadow-2xl"
             style={{ touchAction: 'none', userSelect: 'none' }}
           />
+          {gameOver && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 rounded-xl">
+              <p className="text-3xl font-black text-red-400 mb-2">Game Over</p>
+              <p className="text-lg text-white mb-4">Score : {score}</p>
+              <button
+                onClick={() => router.push(`/multi/${code}`)}
+                className="rounded-xl bg-indigo-600 px-6 py-3 font-bold text-white hover:bg-indigo-500"
+              >
+                Retour a la salle
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Leaderboard */}
