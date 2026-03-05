@@ -8,6 +8,7 @@ interface QuestionMultiData {
   texte: string
   choix: string[]
   niveauId: number
+  triggeredByUserId: string
 }
 
 interface ScoreEntry {
@@ -20,9 +21,7 @@ interface MultiGameState {
   joueurs: string[]
   started: boolean
   question: QuestionMultiData | null
-  showLeverMain: boolean
-  joueurQuiRepond: string | null
-  joueurRepondId: string | null
+  triggeredByUserId: string | null
   joueurBloque: string | null
   explication: string | null
   scores: ScoreEntry[]
@@ -34,9 +33,7 @@ export function useMultiGame(salleId: string) {
     joueurs: [],
     started: false,
     question: null,
-    showLeverMain: false,
-    joueurQuiRepond: null,
-    joueurRepondId: null,
+    triggeredByUserId: null,
     joueurBloque: null,
     explication: null,
     scores: [],
@@ -47,9 +44,7 @@ export function useMultiGame(salleId: string) {
     setState((s) => ({
       ...s,
       question: null,
-      showLeverMain: false,
-      joueurQuiRepond: null,
-      joueurRepondId: null,
+      triggeredByUserId: null,
       joueurBloque: null,
       explication: null,
     }))
@@ -80,29 +75,13 @@ export function useMultiGame(salleId: string) {
       setState((s) => ({
         ...s,
         question: data,
-        showLeverMain: true,
-        joueurQuiRepond: null,
-        joueurRepondId: null,
+        triggeredByUserId: data.triggeredByUserId,
         joueurBloque: null,
         explication: null,
       }))
     })
 
-    channel.bind('main-levee', (data: {
-      joueurNom: string
-      joueurId: string
-      question: QuestionMultiData | null
-    }) => {
-      setState((s) => ({
-        ...s,
-        joueurQuiRepond: data.joueurNom,
-        joueurRepondId: data.joueurId,
-        showLeverMain: false,
-        question: data.question ?? s.question,
-      }))
-    })
-
-    channel.bind('reponse-correcte', (data: { joueurNom: string; explication: string | null; scores: ScoreEntry[] }) => {
+    channel.bind('reponse-correcte', (data: { joueurNom: string; explication: string | null; scores: ScoreEntry[]; points: number }) => {
       setState((s) => ({
         ...s,
         explication: data.explication,
@@ -117,9 +96,6 @@ export function useMultiGame(salleId: string) {
       setState((s) => ({
         ...s,
         joueurBloque: data.joueurNom,
-        joueurQuiRepond: null,
-        joueurRepondId: null,
-        showLeverMain: true,
       }))
     })
 

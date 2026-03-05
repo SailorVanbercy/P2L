@@ -37,18 +37,22 @@ export async function POST(req: Request) {
     select: { currentQuestionId: true },
   })
 
-  // Find the next question in order
-  let question = questions[0]
+  // If a question is already active, don't create a new one
   if (salle?.currentQuestionId) {
-    const currentIndex = questions.findIndex((q) => q.id === salle.currentQuestionId)
-    const nextIndex = (currentIndex + 1) % questions.length
-    question = questions[nextIndex]
+    return NextResponse.json({ questionId: salle.currentQuestionId })
   }
 
-  // Store current question and reset joueurQuiRepond
+  // Pick the first question (currentQuestionId is null here, cleared after each round)
+  const question = questions[0]
+
+  // Store current question, timestamp, and reset joueurQuiRepond
   await prisma.salle.update({
     where: { id: parsed.data.salleId },
-    data: { currentQuestionId: question.id, joueurQuiRepond: null },
+    data: {
+      currentQuestionId: question.id,
+      joueurQuiRepond: null,
+      questionStartedAt: new Date(),
+    },
   })
 
   // Do NOT include bonneReponse in the Pusher payload
@@ -57,6 +61,7 @@ export async function POST(req: Request) {
     texte: question.texte,
     choix: question.choix,
     niveauId: question.niveauId,
+    triggeredByUserId: session.user.id,
   })
 
   return NextResponse.json({ questionId: question.id })

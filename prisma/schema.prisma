@@ -71,6 +71,7 @@ model Salle {
   statut            StatutSalle   @default(ATTENTE)
   joueurQuiRepond   String?
   currentQuestionId Int?
+  questionStartedAt DateTime?
   joueurs           SalleJoueur[]
   createdAt         DateTime      @default(now())
 }

@@ -22,7 +22,7 @@ import {
 } from '@/components/tetris/TetrisEngine'
 import { MobileControls } from '@/components/tetris/MobileControls'
 import { useTouchControls } from '@/hooks/useTouchControls'
-import { SCORING, calculerPointsLignes } from '@/lib/scoring'
+import { calculerPointsLignes } from '@/lib/scoring'
 import type { TetrisHandlers } from '@/components/tetris/TetrisBoard'
 
 const CELL_SIZES = { mobile: 24, tablet: 28, desktop: 30 }
@@ -38,6 +38,8 @@ const COLORS = [
   '#22c55e', '#ef4444', '#3b82f6', '#f97316',
 ]
 
+const AVANTAGE_SECONDS = 3
+
 export default function MultiPlayPage() {
   const { data: session } = useSession()
   const params = useParams()
@@ -47,7 +49,6 @@ export default function MultiPlayPage() {
   const [salleId, setSalleId] = useState<string | null>(null)
   const [niveauId, setNiveauId] = useState(1)
   const [niveauVitesse, setNiveauVitesse] = useState(500)
-  const [niveauNumero, setNiveauNumero] = useState(1)
   const [cellSize, setCellSize] = useState(getCellSize())
 
   // Load salle info
@@ -58,8 +59,6 @@ export default function MultiPlayPage() {
         const data = await res.json()
         setSalleId(data.id)
         setNiveauId(data.niveauId)
-        setNiveauNumero(data.niveau.numero)
-        // Speed based on level
         setNiveauVitesse(Math.max(100, 600 - data.niveau.numero * 50))
       }
     }
@@ -84,9 +83,13 @@ export default function MultiPlayPage() {
   const [score, setScore] = useState(0)
   const [blocsPlaces, setBlocsPlaces] = useState(0)
   const [gameOver, setGameOver] = useState(false)
-  const [isBloque, setIsBloque] = useState(false)
   const [timer, setTimer] = useState(30)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  // 3-second advantage system
+  const [canAnswer, setCanAnswer] = useState(false)
+  const [countdown, setCountdown] = useState(0)
+  const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   // ResizeObserver
   useEffect(() => {
@@ -104,17 +107,40 @@ export default function MultiPlayPage() {
     return () => observer.disconnect()
   }, [])
 
-  // Pause game when question appears
+  const userId = session?.user?.id ?? ''
+
+  // Pause game when question appears (global pause for all players)
   useEffect(() => {
     if (multi.question) {
       pausedRef.current = true
-      setIsBloque(false)
       setTimer(30)
-      // Start 30s timer
+
+      // 3-second advantage: triggerer can answer immediately, others wait
+      const isTriggerer = multi.triggeredByUserId === userId
+      if (isTriggerer) {
+        setCanAnswer(true)
+        setCountdown(0)
+      } else {
+        setCanAnswer(false)
+        setCountdown(AVANTAGE_SECONDS)
+        // Countdown for non-triggerers
+        countdownRef.current = setInterval(() => {
+          setCountdown((c) => {
+            if (c <= 1) {
+              if (countdownRef.current) clearInterval(countdownRef.current)
+              countdownRef.current = null
+              setCanAnswer(true)
+              return 0
+            }
+            return c - 1
+          })
+        }, 1000)
+      }
+
+      // Start 30s global timer
       timerRef.current = setInterval(() => {
         setTimer((t) => {
           if (t <= 1) {
-            // Time's up - resume
             if (timerRef.current) clearInterval(timerRef.current)
             multi.resetQuestion()
             pausedRef.current = false
@@ -125,15 +151,22 @@ export default function MultiPlayPage() {
       }, 1000)
     } else {
       pausedRef.current = false
+      setCanAnswer(false)
+      setCountdown(0)
       if (timerRef.current) {
         clearInterval(timerRef.current)
         timerRef.current = null
       }
+      if (countdownRef.current) {
+        clearInterval(countdownRef.current)
+        countdownRef.current = null
+      }
     }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current)
+      if (countdownRef.current) clearInterval(countdownRef.current)
     }
-  }, [multi.question, multi.resetQuestion])
+  }, [multi.question, multi.resetQuestion, multi.triggeredByUserId, userId])
 
   function ghostPiece(board: Board, piece: Piece): Piece {
     let ghost = { ...piece }
@@ -197,8 +230,9 @@ export default function MultiPlayPage() {
     boardRef.current = clearedBoard
 
     blocsRef.current += 1
+    // Score: only line clears count (no per-piece bonus)
     const lineScore = calculerPointsLignes(linesCleared)
-    scoreRef.current += SCORING.PIECE_POSEE + lineScore
+    scoreRef.current += lineScore
 
     setScore(scoreRef.current)
     setBlocsPlaces(blocsRef.current)
@@ -210,7 +244,6 @@ export default function MultiPlayPage() {
       gameOverRef.current = true
       setGameOver(true)
       cancelAnimationFrame(rafRef.current)
-      // Save score
       if (salleId) {
         fetch('/api/multi/scores', {
           method: 'POST',
@@ -221,7 +254,7 @@ export default function MultiPlayPage() {
       return
     }
 
-    // Trigger question every N blocs via API
+    // Trigger question every N blocs
     if (blocsRef.current > 0 && blocsRef.current % BLOCS_AVANT_QUESTION === 0 && salleId) {
       fetch('/api/multi/question', {
         method: 'POST',
@@ -229,7 +262,7 @@ export default function MultiPlayPage() {
         body: JSON.stringify({ salleId, niveauId }),
       })
     }
-  }, [niveauNumero, niveauId, salleId])
+  }, [niveauId, salleId])
 
   const tick = useCallback(
     (timestamp: number) => {
@@ -290,15 +323,12 @@ export default function MultiPlayPage() {
       const p = currentRef.current
       if (isValidPosition(boardRef.current, p, 0, 1)) {
         currentRef.current = { ...p, y: p.y + 1 }
-        scoreRef.current += 1
-        setScore(scoreRef.current)
       }
     },
     hardDrop: () => {
       if (pausedRef.current) return
       const p = currentRef.current
       const ghost = ghostPiece(boardRef.current, p)
-      scoreRef.current += (ghost.y - p.y) * SCORING.HARD_DROP_PAR_CASE
       currentRef.current = ghost
       lockAndProceed()
     },
@@ -322,19 +352,6 @@ export default function MultiPlayPage() {
     return () => window.removeEventListener('keydown', handleKey)
   }, [lockAndProceed])
 
-  async function handleLeverMain() {
-    if (!salleId) return
-    const res = await fetch('/api/multi/lever-main', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ salleId }),
-    })
-    if (res.status === 403) {
-      setIsBloque(true)
-      setTimeout(() => setIsBloque(false), 5_000)
-    }
-  }
-
   async function handleRepondre(index: number) {
     if (!salleId || !multi.question) return
     await fetch('/api/multi/repondre', {
@@ -347,9 +364,6 @@ export default function MultiPlayPage() {
       }),
     })
   }
-
-  const userId = session?.user?.id ?? ''
-  const isRespondeur = multi.joueurRepondId === userId && multi.joueurRepondId !== null
 
   return (
     <div className="flex min-h-screen flex-col bg-[#0a0a0f] px-3 py-3 lg:px-6 lg:py-6">
@@ -399,13 +413,10 @@ export default function MultiPlayPage() {
       {multi.question && (
         <QuestionMulti
           question={multi.question}
-          showLeverMain={multi.showLeverMain}
-          joueurQuiRepond={multi.joueurQuiRepond}
+          canAnswer={canAnswer}
+          countdown={countdown}
           joueurBloque={multi.joueurBloque}
           explication={multi.explication}
-          isBloque={isBloque}
-          isRespondeur={isRespondeur}
-          onLeverMain={handleLeverMain}
           onRepondre={handleRepondre}
           timerSeconds={timer}
         />

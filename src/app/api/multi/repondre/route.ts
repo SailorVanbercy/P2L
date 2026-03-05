@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { pusherServer } from '@/lib/pusher'
+import { calculerPointsReponse } from '@/lib/scoring'
 import { z } from 'zod'
 
 const schema = z.object({
@@ -34,6 +35,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Question introuvable' }, { status: 404 })
   }
 
+  const salle = await prisma.salle.findUnique({
+    where: { id: salleId },
+    select: { questionStartedAt: true },
+  })
+
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: { nom: true },
@@ -42,16 +48,21 @@ export async function POST(req: Request) {
   const joueurNom = user?.nom ?? 'Joueur'
 
   if (reponseIndex === question.bonneReponse) {
-    // Correct answer
+    // Calculate time-based points
+    const tempsMs = salle?.questionStartedAt
+      ? Date.now() - salle.questionStartedAt.getTime()
+      : 10000
+    const points = calculerPointsReponse(true, tempsMs)
+
     await prisma.salleJoueur.updateMany({
       where: { salleId, userId },
-      data: { score: { increment: 150 } },
+      data: { score: { increment: points } },
     })
 
-    // Reset joueurQuiRepond and currentQuestionId
+    // Reset question state
     await prisma.salle.update({
       where: { id: salleId },
-      data: { joueurQuiRepond: null, currentQuestionId: null },
+      data: { joueurQuiRepond: null, currentQuestionId: null, questionStartedAt: null },
     })
 
     const scores = await prisma.salleJoueur.findMany({
@@ -63,6 +74,7 @@ export async function POST(req: Request) {
     await pusherServer.trigger(`salle-${salleId}`, 'reponse-correcte', {
       joueurNom,
       explication: question.explication,
+      points,
       scores: scores.map((s) => ({
         joueurNom: s.user.nom,
         joueurId: s.userId,
@@ -70,31 +82,12 @@ export async function POST(req: Request) {
       })),
     })
 
-    return NextResponse.json({ correct: true })
+    return NextResponse.json({ correct: true, points })
   } else {
-    // Wrong answer — block player for 10s
-    await prisma.salleJoueur.updateMany({
-      where: { salleId, userId },
-      data: { bloque: true },
-    })
-
-    // Reset joueurQuiRepond so others can raise hand
-    await prisma.salle.update({
-      where: { id: salleId },
-      data: { joueurQuiRepond: null },
-    })
-
+    // Wrong answer — broadcast but don't block others from answering
     await pusherServer.trigger(`salle-${salleId}`, 'reponse-incorrecte', {
       joueurNom,
     })
-
-    // Unblock after 5s
-    setTimeout(async () => {
-      await prisma.salleJoueur.updateMany({
-        where: { salleId, userId },
-        data: { bloque: false },
-      })
-    }, 5_000)
 
     return NextResponse.json({ correct: false })
   }
