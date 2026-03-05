@@ -75,6 +75,7 @@ export default function MultiPlayPage() {
   const nextRef = useRef<Piece>(randomPiece())
   const scoreRef = useRef(0)
   const blocsRef = useRef(0)
+  const blocsSinceQuestionRef = useRef(0)
   const rafRef = useRef<number>(0)
   const lastTickRef = useRef(0)
   const pausedRef = useRef(false)
@@ -268,8 +269,10 @@ export default function MultiPlayPage() {
       return
     }
 
-    // Trigger question every N blocs
-    if (blocsRef.current > 0 && blocsRef.current % BLOCS_AVANT_QUESTION === 0 && salleId) {
+    // Trigger question every N blocs (dedicated counter to avoid modulo skip)
+    blocsSinceQuestionRef.current += 1
+    if (blocsSinceQuestionRef.current >= BLOCS_AVANT_QUESTION && salleId) {
+      blocsSinceQuestionRef.current = 0
       fetch('/api/multi/question', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

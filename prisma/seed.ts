@@ -30,7 +30,7 @@ async function main() {
   for (const n of NIVEAUX) {
     const niveau = await prisma.niveau.upsert({
       where: { numero: n.numero },
-      update: {},
+      update: { vitesse: n.vitesse },
       create: n,
     })
 

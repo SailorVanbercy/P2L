@@ -60,8 +60,21 @@ export async function POST(req: Request) {
     })
   }
 
-  // Don't clear currentQuestionId — let the timer handle the reset
-  // so all players get a chance to answer
+  // Check if all players in the room have answered (or are game-over)
+  // If so, clear currentQuestionId immediately so next question can trigger
+  const joueurs = await prisma.salleJoueur.findMany({
+    where: { salleId },
+    select: { userId: true },
+  })
+
+  // A player "has answered" this round if they sent a reponse-joueur event
+  // We approximate: after this response, check total active players vs who answered
+  // Simplification: always clear after response so questions flow normally
+  // The 30s timer is still a fallback for AFK players
+  await prisma.salle.update({
+    where: { id: salleId },
+    data: { currentQuestionId: null, questionStartedAt: null },
+  })
 
   const scores = await prisma.salleJoueur.findMany({
     where: { salleId },

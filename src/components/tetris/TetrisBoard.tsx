@@ -99,6 +99,7 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
   const nextRef = useRef<Piece>(randomPiece())
   const scoreRef = useRef(0)
   const blocsRef = useRef(0)
+  const blocsSinceQuestionRef = useRef(0)
   const linesRef = useRef(0)
   const questionIndexRef = useRef(0)
   const rafRef = useRef<number>(0)
@@ -126,6 +127,7 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
     nextRef.current = randomPiece()
     scoreRef.current = 0
     blocsRef.current = 0
+    blocsSinceQuestionRef.current = 0
     linesRef.current = 0
     questionIndexRef.current = 0
     lastTickRef.current = 0
@@ -231,8 +233,10 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
       return
     }
 
-    // Trigger question every N blocs
-    if (blocsRef.current > 0 && blocsRef.current % BLOCS_AVANT_QUESTION === 0) {
+    // Trigger question every N blocs (dedicated counter to avoid modulo skip)
+    blocsSinceQuestionRef.current += 1
+    if (blocsSinceQuestionRef.current >= BLOCS_AVANT_QUESTION) {
+      blocsSinceQuestionRef.current = 0
       statusRef.current = 'question'
       setStatus('question')
       const qi = questionIndexRef.current % orderedQuestions.current.length
