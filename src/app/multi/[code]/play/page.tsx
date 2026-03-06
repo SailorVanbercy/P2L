@@ -75,7 +75,8 @@ export default function MultiPlayPage() {
   const nextRef = useRef<Piece>(randomPiece())
   const scoreRef = useRef(0)
   const blocsRef = useRef(0)
-  const blocsSinceQuestionRef = useRef(0)
+  const questionCountRef = useRef(0)
+  const awaitingQuestionRef = useRef(false)
   const rafRef = useRef<number>(0)
   const lastTickRef = useRef(0)
   const pausedRef = useRef(false)
@@ -116,8 +117,9 @@ export default function MultiPlayPage() {
   useEffect(() => {
     if (multi.question) {
       pausedRef.current = true
-      // Ne PAS reset le compteur ici — chaque joueur garde son propre compteur
-      // Le reset se fait uniquement dans lockAndProceed quand le joueur déclenche la question
+      // Incrémenter le compteur de questions servies (synchro Pusher)
+      questionCountRef.current += 1
+      awaitingQuestionRef.current = false
       setHasAnswered(false)
       setTimer(30)
 
@@ -272,10 +274,10 @@ export default function MultiPlayPage() {
       return
     }
 
-    // Trigger question every N blocs — chaque joueur a son propre compteur indépendant
-    blocsSinceQuestionRef.current += 1
-    if (blocsSinceQuestionRef.current >= BLOCS_AVANT_QUESTION && salleId) {
-      blocsSinceQuestionRef.current = 0
+    // Trigger question quand le nombre de blocs atteint le prochain seuil absolu (5, 10, 15...)
+    const nextThreshold = (questionCountRef.current + 1) * BLOCS_AVANT_QUESTION
+    if (blocsRef.current >= nextThreshold && salleId && !awaitingQuestionRef.current) {
+      awaitingQuestionRef.current = true
       fetch('/api/multi/question', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
