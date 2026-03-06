@@ -116,7 +116,8 @@ export default function MultiPlayPage() {
   useEffect(() => {
     if (multi.question) {
       pausedRef.current = true
-      blocsSinceQuestionRef.current = 0
+      // Ne PAS reset le compteur ici — chaque joueur garde son propre compteur
+      // Le reset se fait uniquement dans lockAndProceed quand le joueur déclenche la question
       setHasAnswered(false)
       setTimer(30)
 
@@ -271,9 +272,10 @@ export default function MultiPlayPage() {
       return
     }
 
-    // Trigger question every N blocs — counter only resets when question arrives via Pusher
+    // Trigger question every N blocs — chaque joueur a son propre compteur indépendant
     blocsSinceQuestionRef.current += 1
     if (blocsSinceQuestionRef.current >= BLOCS_AVANT_QUESTION && salleId) {
+      blocsSinceQuestionRef.current = 0
       fetch('/api/multi/question', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
