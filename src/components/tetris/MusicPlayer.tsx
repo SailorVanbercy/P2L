@@ -52,12 +52,12 @@ export function MusicPlayer() {
   }
 
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm">
+    <div className="flex items-center gap-2 backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm">
       {TRACKS.map((t, i) => (
         <button
           key={t.id}
           onClick={() => setTrackIndex(i)}
-          className={`rounded px-2 py-0.5 text-xs transition ${
+          className={`rounded-lg px-2 py-0.5 text-xs transition-colors ${
             trackIndex === i
               ? 'bg-indigo-600 text-white'
               : 'text-slate-400 hover:text-white'
@@ -69,7 +69,7 @@ export function MusicPlayer() {
 
       <button
         onClick={togglePlay}
-        className="rounded px-2 py-0.5 text-slate-300 hover:text-white transition"
+        className="rounded-lg px-2 py-0.5 text-slate-300 hover:text-white transition-colors"
         title={playing ? 'Pause' : 'Play'}
       >
         {playing ? '⏸' : '▶'}
@@ -77,7 +77,7 @@ export function MusicPlayer() {
 
       <button
         onClick={() => setMuted((m) => !m)}
-        className="text-slate-300 hover:text-white transition"
+        className="text-slate-300 hover:text-white transition-colors"
         title={muted ? 'Activer le son' : 'Couper le son'}
       >
         {muted ? '🔇' : '🔊'}

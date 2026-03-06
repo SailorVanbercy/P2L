@@ -43,11 +43,11 @@ export function PlayClient({ niveaux, niveauxReussisIds }: Props) {
 
   if (selectedNiveau && questions.length > 0) {
     return (
-      <div className="flex min-h-screen flex-col bg-[#0a0a0f] px-3 py-3 lg:px-6 lg:py-6">
+      <div className="flex min-h-screen flex-col px-3 py-3 lg:px-6 lg:py-6">
         <header className="mb-3 lg:mb-6 flex items-center justify-between gap-2 lg:gap-4 flex-wrap">
           <button
             onClick={() => setSelectedNiveau(null)}
-            className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm text-slate-300 hover:bg-white/10"
+            className="backdrop-blur-lg bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl px-3 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm text-slate-300 font-medium transition-colors"
           >
             ← Niveaux
           </button>
@@ -57,7 +57,7 @@ export function PlayClient({ niveaux, niveauxReussisIds }: Props) {
           </span>
           <button
             onClick={() => signOut({ callbackUrl: '/login' })}
-            className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm text-slate-300 hover:bg-white/10"
+            className="backdrop-blur-lg bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl px-3 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm text-slate-300 font-medium transition-colors"
           >
             Déconnexion
           </button>
@@ -76,21 +76,21 @@ export function PlayClient({ niveaux, niveauxReussisIds }: Props) {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#0a0a0f] px-4 py-6 lg:px-6 lg:py-8">
+    <div className="flex min-h-screen flex-col px-4 py-6 lg:px-8 lg:py-8">
       <header className="mb-6 lg:mb-8 flex items-center justify-between gap-3 lg:gap-4 flex-wrap">
-        <h1 className="text-xl lg:text-2xl font-bold text-white">Tetris Formation</h1>
+        <h1 className="text-2xl lg:text-3xl font-bold text-white">Tetris Formation</h1>
         <MusicPlayer />
         <div className="flex items-center gap-2 lg:gap-4">
-          <a href="/leaderboard" className="text-xs lg:text-sm text-indigo-400 hover:underline">
+          <a href="/leaderboard" className="text-xs lg:text-sm text-indigo-400 hover:text-indigo-300 transition-colors">
             Classement
           </a>
-          <a href="/multi" className="text-xs lg:text-sm text-purple-400 hover:underline">
+          <a href="/multi" className="text-xs lg:text-sm text-indigo-400 hover:text-indigo-300 transition-colors">
             Multijoueur
           </a>
           <span className="hidden sm:inline text-sm text-slate-400">{session?.user?.name}</span>
           <button
             onClick={() => signOut({ callbackUrl: '/login' })}
-            className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm text-slate-300 hover:bg-white/10"
+            className="backdrop-blur-lg bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl px-3 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm text-slate-300 font-medium transition-colors"
           >
             Déconnexion
           </button>
@@ -98,7 +98,7 @@ export function PlayClient({ niveaux, niveauxReussisIds }: Props) {
       </header>
 
       <div className="mx-auto w-full max-w-3xl">
-        <h2 className="mb-4 lg:mb-6 text-lg lg:text-xl font-semibold text-slate-200">Choisissez un niveau</h2>
+        <h2 className="mb-4 lg:mb-6 text-lg lg:text-xl font-semibold text-white">Choisissez un niveau</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:gap-4">
           {niveaux.map((n) => {
             const unlocked = isUnlocked(n)
@@ -109,14 +109,14 @@ export function PlayClient({ niveaux, niveauxReussisIds }: Props) {
                 onClick={() => selectNiveau(n)}
                 disabled={!unlocked || loadingQ}
                 title={!unlocked ? `Completez le niveau ${n.numero - 1} d'abord` : undefined}
-                className={`relative flex flex-col items-center rounded-xl border p-4 lg:p-5 text-center transition ${
+                className={`relative flex flex-col items-center backdrop-blur-xl rounded-2xl border p-4 lg:p-5 text-center transition-all ${
                   unlocked
-                    ? 'border-white/10 bg-white/5 hover:border-indigo-500 hover:bg-indigo-500/10'
-                    : 'cursor-not-allowed border-white/5 bg-white/[0.02] opacity-50'
+                    ? 'bg-white/5 border-white/10 hover:bg-white/[0.08] hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/10'
+                    : 'cursor-not-allowed bg-white/[0.02] border-white/5 opacity-40'
                 } disabled:cursor-not-allowed`}
               >
                 {done && (
-                  <span className="absolute right-2 top-2 text-xs text-green-400">✓</span>
+                  <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-green-500/20 text-[10px] text-green-400">✓</span>
                 )}
                 {!unlocked && (
                   <span className="absolute right-2 top-2 text-xs text-slate-500">🔒</span>
@@ -132,8 +132,8 @@ export function PlayClient({ niveaux, niveauxReussisIds }: Props) {
           })}
         </div>
 
-        <div className="mt-8 lg:mt-10 rounded-xl border border-white/5 bg-white/5 p-4 lg:p-5 text-xs lg:text-sm text-slate-400">
-          <p className="mb-1 font-semibold text-slate-200">Comment jouer</p>
+        <div className="mt-8 lg:mt-10 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-4 lg:p-6 text-xs lg:text-sm text-slate-400">
+          <p className="mb-1 font-semibold text-white">Comment jouer</p>
           <ul className="list-disc pl-5 space-y-1">
             <li>← → : deplacer la piece</li>
             <li>↑ ou X : tourner</li>

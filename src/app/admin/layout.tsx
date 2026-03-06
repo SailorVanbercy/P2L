@@ -10,16 +10,16 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f]">
-      <nav className="border-b border-white/10 bg-white/5 px-4 py-3 lg:px-6 lg:py-4">
+    <div className="min-h-screen">
+      <nav className="border-b border-white/10 backdrop-blur-xl bg-white/5 px-4 py-3 lg:px-8 lg:py-4">
         <div className="flex items-center gap-4 lg:gap-6">
           <span className="font-bold text-sm lg:text-base text-white">Admin</span>
-          <Link href="/admin/questions" className="text-xs lg:text-sm text-slate-400 hover:text-white">Questions</Link>
-          <Link href="/admin/scores" className="text-xs lg:text-sm text-slate-400 hover:text-white">Scores</Link>
-          <Link href="/play" className="ml-auto text-xs lg:text-sm text-slate-400 hover:text-white">← Jeu</Link>
+          <Link href="/admin/questions" className="text-xs lg:text-sm text-slate-400 hover:text-white transition-colors">Questions</Link>
+          <Link href="/admin/scores" className="text-xs lg:text-sm text-slate-400 hover:text-white transition-colors">Scores</Link>
+          <Link href="/play" className="ml-auto text-xs lg:text-sm text-slate-400 hover:text-white transition-colors">← Jeu</Link>
         </div>
       </nav>
-      <main className="px-4 py-6 lg:px-6 lg:py-8">{children}</main>
+      <main className="px-4 py-6 lg:px-8 lg:py-8">{children}</main>
     </div>
   )
 }

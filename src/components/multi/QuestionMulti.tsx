@@ -50,13 +50,13 @@ export function QuestionMulti({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-3 lg:p-8">
-      <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 bg-[#12121a] p-4 lg:p-8 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-3 lg:p-8">
+      <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto backdrop-blur-2xl bg-white/[0.08] border border-white/[0.12] rounded-2xl p-4 lg:p-8 shadow-2xl shadow-black/40">
         <div className="mb-1 flex items-center justify-between">
-          <span className="text-xs font-semibold uppercase tracking-widest text-indigo-400">
+          <span className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
             Question Multi
           </span>
-          <span className="text-sm font-mono text-yellow-400">{timerSeconds}s</span>
+          <span className="text-sm font-mono text-amber-400">{timerSeconds}s</span>
         </div>
         <p className="mb-4 lg:mb-6 text-base lg:text-xl font-bold leading-snug text-white">
           {question.texte}
@@ -67,13 +67,13 @@ export function QuestionMulti({
           <div className="mb-4">
             <button
               onClick={() => setShowSource(!showSource)}
-              className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-blue-400 hover:text-blue-300 transition-colors"
+              className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-indigo-400 hover:text-indigo-300 transition-colors"
             >
               <span>{showSource ? '▼' : '▶'}</span>
               Consulter la source
             </button>
             {showSource && (
-              <div className="mt-2 rounded-lg border border-blue-500/20 bg-blue-500/5 px-4 py-3 text-sm leading-relaxed text-slate-300">
+              <div className="mt-2 rounded-xl border border-indigo-500/20 bg-indigo-500/5 px-4 py-3 text-sm leading-relaxed text-slate-300">
                 {question.source}
               </div>
             )}
@@ -82,12 +82,12 @@ export function QuestionMulti({
 
         {/* Countdown before answers unlock */}
         {!canAnswer && selected === null && countdown > 0 && (
-          <p className="mb-3 text-center text-sm font-semibold text-yellow-400">
+          <p className="mb-3 text-center text-sm font-semibold text-amber-400">
             Reponses disponibles dans {countdown}s...
           </p>
         )}
 
-        {/* Answer choices — visible to all, disabled during countdown or after answering */}
+        {/* Answer choices */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {question.choix.map((choix, i) => (
             <button
@@ -96,12 +96,12 @@ export function QuestionMulti({
               disabled={selected !== null || !canAnswer}
               className={`p-3 lg:p-4 rounded-xl border-2 text-left text-sm lg:text-base font-medium transition-all ${
                 selected === null && canAnswer
-                  ? 'border-white/10 bg-white/5 text-white hover:border-blue-500 hover:bg-blue-500/10 cursor-pointer'
+                  ? 'border-white/10 bg-white/5 text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 cursor-pointer'
                   : selected === i
-                    ? 'border-yellow-500 bg-yellow-500/20 text-yellow-300'
+                    ? 'border-indigo-500 bg-indigo-500/20 text-indigo-300'
                     : selected !== null
-                      ? 'border-white/5 bg-white/5 text-slate-500'
-                      : 'border-white/5 bg-white/5 text-slate-500 cursor-not-allowed'
+                      ? 'border-white/5 bg-white/[0.03] text-slate-500'
+                      : 'border-white/5 bg-white/[0.03] text-slate-500 cursor-not-allowed'
               }`}
             >
               <span className="mr-2 font-bold text-indigo-400">
@@ -116,7 +116,7 @@ export function QuestionMulti({
         {reponses.length > 0 && (
           <div className="mt-3 space-y-1">
             {reponses.map((r, i) => (
-              <p key={i} className={`text-sm ${r.correct ? 'text-green-400' : 'text-orange-400'}`}>
+              <p key={i} className={`text-sm ${r.correct ? 'text-green-400' : 'text-red-400'}`}>
                 {r.joueurNom} {r.correct ? `a trouve ! (+${r.points} pts)` : 's\'est trompe !'}
               </p>
             ))}

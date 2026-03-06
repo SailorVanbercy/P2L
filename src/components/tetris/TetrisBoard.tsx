@@ -415,13 +415,13 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 items-center lg:items-start justify-center p-2 lg:p-6">
+    <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center lg:items-start justify-center p-2 lg:p-6">
       <div className="relative" ref={containerRef}>
         <canvas
           ref={canvasRef}
           width={COLS * cellSize}
           height={ROWS * cellSize}
-          className="rounded-xl border border-white/10 shadow-2xl mx-auto lg:mx-0"
+          className="rounded-2xl border border-white/10 shadow-2xl shadow-black/30 mx-auto lg:mx-0"
           style={{ touchAction: 'none', userSelect: 'none' }}
         />
         {showBonus !== null && (
@@ -454,7 +454,7 @@ export function TetrisBoard({ niveau, questions, onScoreSaved, onVictory }: Prop
       </div>
 
       {/* Info panel: row on mobile, column on desktop */}
-      <div className="w-full lg:w-48 flex flex-row lg:flex-col gap-4 justify-center flex-wrap">
+      <div className="w-full lg:w-52 flex flex-row lg:flex-col gap-3 lg:gap-4 justify-center flex-wrap">
         <LevelBanner
           niveau={niveau}
           score={score}

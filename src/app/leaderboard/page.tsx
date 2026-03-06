@@ -27,17 +27,17 @@ export default async function LeaderboardPage() {
   })
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] px-4 py-6 lg:px-6 lg:py-8">
+    <div className="min-h-screen px-4 py-6 lg:px-8 lg:py-8">
       <header className="mb-6 lg:mb-8 flex items-center justify-between">
-        <h1 className="text-xl lg:text-2xl font-bold text-white">Classement</h1>
-        <Link href="/play" className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm text-slate-300 hover:bg-white/10">
+        <h1 className="text-2xl lg:text-3xl font-bold text-white">Classement</h1>
+        <Link href="/play" className="backdrop-blur-lg bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl px-3 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm text-slate-300 font-medium transition-colors">
           ← Jouer
         </Link>
       </header>
 
       <div className="mx-auto max-w-4xl space-y-6 lg:space-y-8">
         {topByNiveau.map(({ niveau, scores: nScores }) => (
-          <div key={niveau.id} className="rounded-xl border border-white/10 bg-white/5 p-4 lg:p-6">
+          <div key={niveau.id} className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-4 lg:p-6 shadow-lg shadow-black/20">
             <h2 className="mb-3 lg:mb-4 text-base lg:text-lg font-semibold text-white">
               <span className="mr-2 text-indigo-400">Niveau {niveau.numero}</span>
               <span className="text-slate-400 text-xs lg:text-sm font-normal">{niveau.titre}</span>
@@ -49,7 +49,7 @@ export default async function LeaderboardPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-xs lg:text-sm">
                   <thead>
-                    <tr className="text-left text-[10px] lg:text-xs uppercase tracking-widest text-slate-500">
+                    <tr className="text-left text-[10px] lg:text-xs font-medium uppercase tracking-wider text-slate-500">
                       <th className="pb-2 pr-3 lg:pr-4">#</th>
                       <th className="pb-2 pr-3 lg:pr-4">Joueur</th>
                       <th className="pb-2 pr-3 lg:pr-4">Score</th>

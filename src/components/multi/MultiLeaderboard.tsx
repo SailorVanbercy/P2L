@@ -15,14 +15,14 @@ export function MultiLeaderboard({ scores, currentUserId }: Props) {
   const sorted = [...scores].sort((a, b) => b.score - a.score)
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-      <h3 className="mb-3 text-xs uppercase tracking-widest text-slate-400">Classement</h3>
+    <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-4 shadow-lg shadow-black/20">
+      <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-slate-400">Classement</h3>
       <div className="space-y-2">
         {sorted.map((s, i) => (
           <div
             key={s.joueurId}
-            className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm ${
-              s.joueurId === currentUserId ? 'bg-indigo-500/20 border border-indigo-500/30' : 'bg-white/5'
+            className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm ${
+              s.joueurId === currentUserId ? 'bg-indigo-500/20 border border-indigo-500/30' : 'bg-white/[0.03]'
             }`}
           >
             <div className="flex items-center gap-2">

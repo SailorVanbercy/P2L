@@ -12,12 +12,12 @@ export default async function AdminScoresPage() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <h1 className="mb-8 text-2xl font-bold text-white">Tous les scores</h1>
+      <h1 className="mb-6 lg:mb-8 text-2xl lg:text-3xl font-bold text-white">Tous les scores</h1>
 
-      <div className="rounded-xl border border-white/10 bg-white/5 overflow-x-auto">
+      <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl overflow-x-auto shadow-lg shadow-black/20">
         <table className="w-full text-xs lg:text-sm min-w-[600px]">
           <thead>
-            <tr className="border-b border-white/10 text-left text-xs uppercase tracking-widest text-slate-500">
+            <tr className="border-b border-white/10 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
               <th className="px-4 py-3">Joueur</th>
               <th className="px-4 py-3">Email</th>
               <th className="px-4 py-3">Niveau</th>
@@ -36,7 +36,7 @@ export default async function AdminScoresPage() {
               </tr>
             )}
             {scores.map((s) => (
-              <tr key={s.id} className="border-t border-white/5 hover:bg-white/5">
+              <tr key={s.id} className="border-t border-white/5 hover:bg-white/[0.06] transition-colors">
                 <td className="px-4 py-3 text-white">{s.user.nom}</td>
                 <td className="px-4 py-3 text-slate-400">{s.user.email}</td>
                 <td className="px-4 py-3 text-slate-300">

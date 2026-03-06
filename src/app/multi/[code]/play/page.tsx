@@ -402,29 +402,29 @@ export default function MultiPlayPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#0a0a0f] px-3 py-3 lg:px-6 lg:py-6">
+    <div className="flex min-h-screen flex-col px-3 py-3 lg:px-6 lg:py-6">
       <header className="mb-3 flex items-center justify-between">
         <span className="text-sm text-slate-400">Salle: <span className="font-mono text-indigo-300">{code}</span></span>
         <span className="text-sm text-slate-400">Score: <span className="font-mono text-white">{score}</span></span>
       </header>
 
-      <div className="flex flex-col lg:flex-row gap-4 items-center lg:items-start justify-center">
+      <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center lg:items-start justify-center">
         {/* Canvas */}
         <div className="relative">
           <canvas
             ref={canvasRef}
             width={COLS * cellSize}
             height={ROWS * cellSize}
-            className="rounded-xl border border-white/10 shadow-2xl"
+            className="rounded-2xl border border-white/10 shadow-2xl shadow-black/30"
             style={{ touchAction: 'none', userSelect: 'none' }}
           />
           {gameOver && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 rounded-xl">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm rounded-2xl">
               <p className="text-3xl font-black text-red-400 mb-2">Game Over</p>
               <p className="text-lg text-white mb-4">Score : {score}</p>
               <button
                 onClick={() => router.push(`/multi/${code}`)}
-                className="rounded-xl bg-indigo-600 px-6 py-3 font-bold text-white hover:bg-indigo-500"
+                className="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 px-6 py-3 font-bold text-white rounded-xl transition-colors"
               >
                 Retour a la salle
               </button>
@@ -435,8 +435,8 @@ export default function MultiPlayPage() {
         {/* Leaderboard */}
         <div className="w-full lg:w-56">
           <MultiLeaderboard scores={multi.scores} currentUserId={userId} />
-          <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-4">
-            <div className="text-xs uppercase tracking-widest text-slate-400 mb-1">Blocs</div>
+          <div className="mt-4 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-4 shadow-lg shadow-black/20">
+            <div className="text-xs font-medium uppercase tracking-wider text-slate-400 mb-1">Blocs</div>
             <div className="text-xl font-bold text-white">{blocsPlaces}</div>
           </div>
         </div>
@@ -459,7 +459,7 @@ export default function MultiPlayPage() {
 
       {/* Explication banner — shown only to the player who answered correctly */}
       {localExplication && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 max-w-md rounded-xl border border-green-500/20 bg-green-500/10 px-5 py-3 text-sm text-green-300 shadow-xl">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 max-w-md backdrop-blur-xl bg-green-500/10 border border-green-500/20 rounded-2xl px-5 py-3 text-sm text-green-300 shadow-2xl shadow-black/30">
           <span className="font-semibold">Bonne reponse ! </span>
           {localExplication}
         </div>

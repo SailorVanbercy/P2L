@@ -98,7 +98,7 @@ export default function SalleAttentePage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0a0a0f]">
+      <div className="flex min-h-screen items-center justify-center">
         <p className="text-slate-400">Chargement...</p>
       </div>
     )
@@ -106,9 +106,9 @@ export default function SalleAttentePage() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#0a0a0f] gap-4">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4">
         <p className="text-red-400">{error}</p>
-        <Link href="/multi" className="text-indigo-400 hover:underline">← Retour</Link>
+        <Link href="/multi" className="text-indigo-400 hover:text-indigo-300 transition-colors">← Retour</Link>
       </div>
     )
   }
@@ -118,9 +118,9 @@ export default function SalleAttentePage() {
   const isHost = session?.user?.id === salle.hostId
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#0a0a0f] px-4 py-6 lg:px-6 lg:py-8">
+    <div className="flex min-h-screen flex-col px-4 py-6 lg:px-8 lg:py-8">
       <header className="mb-8 flex items-center justify-between">
-        <Link href="/multi" className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs lg:text-sm text-slate-300 hover:bg-white/10">
+        <Link href="/multi" className="backdrop-blur-lg bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl px-3 py-1.5 text-xs lg:text-sm text-slate-300 font-medium transition-colors">
           ← Retour
         </Link>
         <span className="text-sm text-slate-400">
@@ -131,8 +131,8 @@ export default function SalleAttentePage() {
       <div className="mx-auto w-full max-w-md text-center">
         {/* Code de salle */}
         <div className="mb-8">
-          <p className="mb-2 text-sm text-slate-400">Code de la salle</p>
-          <div className="inline-block rounded-2xl border-2 border-indigo-500/30 bg-indigo-500/10 px-8 py-4">
+          <p className="mb-2 text-xs font-medium uppercase tracking-wider text-slate-400">Code de la salle</p>
+          <div className="inline-block backdrop-blur-xl bg-indigo-500/10 border-2 border-indigo-500/30 rounded-2xl px-8 py-4 shadow-lg shadow-indigo-500/10">
             <span className="text-4xl lg:text-5xl font-black tracking-[0.3em] text-indigo-300">
               {salle.code}
             </span>
@@ -161,7 +161,7 @@ export default function SalleAttentePage() {
           <button
             onClick={demarrer}
             disabled={starting || salle.joueurs.length < 1}
-            className="w-full rounded-lg bg-green-600 py-4 text-lg font-bold text-white transition hover:bg-green-500 disabled:opacity-50"
+            className="w-full bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 py-4 text-lg font-bold text-white rounded-xl transition-colors disabled:opacity-50"
           >
             {starting ? 'Demarrage...' : 'Demarrer la partie'}
           </button>
