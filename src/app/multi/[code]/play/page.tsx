@@ -116,6 +116,8 @@ export default function MultiPlayPage() {
   useEffect(() => {
     if (multi.question) {
       pausedRef.current = true
+      blocsSinceQuestionRef.current = 0
+      setHasAnswered(false)
       setTimer(30)
 
       // 3-second advantage: triggerer can answer immediately, others wait
@@ -269,10 +271,9 @@ export default function MultiPlayPage() {
       return
     }
 
-    // Trigger question every N blocs (dedicated counter to avoid modulo skip)
+    // Trigger question every N blocs — counter only resets when question arrives via Pusher
     blocsSinceQuestionRef.current += 1
     if (blocsSinceQuestionRef.current >= BLOCS_AVANT_QUESTION && salleId) {
-      blocsSinceQuestionRef.current = 0
       fetch('/api/multi/question', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
